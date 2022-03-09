@@ -1,0 +1,104 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <!-- <div> -->
+  <div fxFlex="20" *ngFor="let item of thumbNails">
+    <mat-card
+      class="thumbNail-card"
+      [ngStyle]="{ 'background-color': item.backColour }"
+    >
+      <mat-card-header class="thumbNail-card-header">
+        <mat-card-title>
+          <div class="card-title-text">{{ item.noOfSales }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-content-text">{{ item.itemName }}</div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content-common">
+        <div>
+          <!-- <i class="fa fa-clock faa-pulse"></i> -->
+          <span class="material-icons icon-ref">local_gas_station</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="20"></div>
+</div>
+
+<br />
+
+<mat-divider></mat-divider>
+
+<br />
+<div class="profile-card">
+  <div class="header">
+    <h2>Transactions for the day</h2>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+  <div fxFlex="80">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="transactionID">
+          <th mat-header-cell *matHeaderCellDef>Transaction ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.transactionID }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="terminalID">
+          <th mat-header-cell *matHeaderCellDef>Terminal ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.terminalID }}
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="cardNumber">
+          <th mat-header-cell *matHeaderCellDef>Card Number</th>
+          <td mat-cell *matCellDef="let element">{{ element.cardNumber }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.amount }}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="transactionDate">
+          <th mat-header-cell *matHeaderCellDef>Transaction Date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.transactionDate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fuelGrade">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fuelGrade }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginatorTR="matPaginator"
+        [length]="dataSource.data.length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  class="my-alternate-theme"
+>
+  <!-- <div> -->
+  <div fxFlex="20" *ngFor="let item of thumbNails">
+    <mat-card
+      class="thumbNail-card"
+      [ngStyle]="{ 'background-color': item.backColour }"
+    >
+      <mat-card-header class="thumbNail-card-header">
+        <mat-card-title>
+          <div class="card-title-text">{{ item.noOfSales }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-content-text">{{ item.itemName }}</div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content-common">
+        <div>
+          <!-- <i class="fa fa-clock faa-pulse"></i> -->
+          <span class="material-icons icon-ref">local_gas_station</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="20"></div>
+</div>
+
+<br />
+
+<mat-divider></mat-divider>
+
+<br />
+<div
+  fxLayout="row"
+  *ngFor="let item of noOfRows; let i = index"
+  fxLayoutAlign="space-between center"
+  fxLayoutGap="20px"
+  class="my-alternate-theme"
+>
+  <br />
+  <div fxFlex="50" *ngFor="let item of defaultNumberG; let j = index">
+    <br />
+    <div *ngIf="tankInfo.length !== i * 2 + j">
+      <!-- <app-guage [data]="tankInfo[i * 2 + j]"></app-guage> -->
+      <app-widget-tank
+        [uppeLimit]="upperLimitArray[i * 2 + j]"
+        [litres]="tankInfo[i * 2 + j].liters"
+        [caption]="tankInfo[i * 2 + j].productName"
+        class="my-alternate-theme"
+      ></app-widget-tank>
+    </div>
+  </div>
+
+  <!-- <div fxFlex="50">
+    <app-guage></app-guage>
+  </div> -->
+</div>
+<br />

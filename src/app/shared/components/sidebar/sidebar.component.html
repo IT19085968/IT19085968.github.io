@@ -1,0 +1,83 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2>{{ user.userName }}</h2>
+      <h4>{{ user.id }}</h4>
+    </div>
+    <img
+      src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
+      alt="Soufiane FADIL"
+    />
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- <h2 matSubheader>Pages</h2> -->
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/default"
+    >Dashboard</a
+  >
+
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/transactions"
+    >Transactions</a
+  >
+
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/dispenserStatus"
+    >Dispenser Status</a
+  >
+
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/createUser"
+    >Create User</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/tankInformation"
+    >Tank Information</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/transactionsForDay"
+    >Search Data</a
+  >
+
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/terminals"
+    >Terminals</a
+  >
+
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/default/updateRecords"
+    >Update Records</a
+  >
+
+  <mat-divider></mat-divider>
+
+  <!-- <h2 matSubheader>Tools</h2>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+    <mat-icon>import_contacts</mat-icon>
+    Contacts
+  </a>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+    <mat-icon>contact_phone</mat-icon>
+    Leads
+  </a>
+
+  another menu -->
+</mat-nav-list>

@@ -1,0 +1,202 @@
+<!-- <mat-card> -->
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <!-- <div> -->
+  <div fxFlex="20" *ngFor="let item of thumbNails">
+    <mat-card
+      class="thumbNail-card"
+      [ngStyle]="{ 'background-color': item.backColour }"
+    >
+      <mat-card-header class="thumbNail-card-header">
+        <mat-card-title>
+          <div class="card-title-text">{{ item.noOfSales }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-content-text">{{ item.itemName }}</div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content-common">
+        <div>
+          <!-- <i class="fa fa-clock faa-pulse"></i> -->
+          <span class="material-icons icon-ref">local_gas_station</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="20"></div>
+</div>
+
+<br />
+
+<mat-divider></mat-divider>
+
+<br />
+
+<form [formGroup]="userFormGroup">
+  <mat-card
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="5px"
+    fxFlex="50"
+  >
+    <div fxFlex="12">
+      <img
+        src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
+        alt="Soufiane FADIL"
+      />
+    </div>
+    <div fxFlex="40">
+      <div class="form-group col-md-2">
+        <mat-form-field class="mat-form-field-fluid" appearance="outline">
+          <mat-label>User Name</mat-label>
+          <input
+            matInput
+            placeholder="Search"
+            [formControl]="userName"
+            placeholder="Search"
+            class="mat-form-field mat-form-field-fluid"
+          />
+          <mat-error *ngIf="userName.hasError('required')"
+            >User Name is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-2">
+        <mat-form-field class="mat-form-field-fluid" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Search"
+            [formControl]="password"
+            placeholder="Search"
+            class="mat-form-field mat-form-field-fluid"
+          />
+          <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="password.hasError('required')"
+            >Password is required
+          </mat-error>
+          <!-- <div
+            *ngIf="f.password.touched && f.password.invalid"
+            class="alert alert-danger"
+          >
+            <div *ngIf="f.password.errors.required">Password is required.</div>
+          </div> -->
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-2">
+        <mat-form-field class="mat-form-field-fluid" appearance="outline">
+          <mat-label>Retype Password</mat-label>
+          <input
+            matInput
+            [type]="showRTPassword ? 'text' : 'password'"
+            placeholder="Search"
+            [formControl]="rtPassword"
+            placeholder="Search"
+            class="mat-form-field mat-form-field-fluid"
+          />
+          <mat-icon matSuffix (click)="toggleRTPasswordVisibility()">{{
+            showRTPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="rtPassword.hasError('required')"
+            >Retype Password is required
+          </mat-error>
+          <mat-error *ngIf="rtPassword.hasError('confirmedValidator')"
+            >Passwords don't match
+          </mat-error>
+          <!-- <div
+            *ngIf="f.rtPassword.touched && f.rtPassword.invalid"
+            class="alert alert-danger"
+          >
+            <div *ngIf="f.rtPassword.errors.required">
+              Password is required.
+            </div>
+            <div *ngIf="f.rtPassword.errors.confirmedValidator">
+              Password and Confirm Password must be match.
+            </div>
+          </div> -->
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex="16">
+      <button
+        mat-raised-button
+        matTooltip="Search by fields"
+        class="m-1 w-100"
+        (click)="createOrUpdateUser()"
+        [ngClass]="updateUserBtn ? 'primaryBtn' : 'accentBtn'"
+      >
+        {{ buttonTitle }}
+      </button>
+      <button
+        class="btn btn-warning clearbtn"
+        mat-raised-button
+        color="btn-warning"
+        matTooltip="Search by fields"
+        (click)="clearFields()"
+      >
+        Clear
+      </button>
+    </div>
+  </mat-card>
+</form>
+<!-- </mat-card> -->
+
+<br />
+<mat-divider></mat-divider>
+<br />
+
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+  <div fxFlex="80">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="indexCoumn">
+          <th mat-header-cell *matHeaderCellDef>Index</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ i + 1 }}
+          </td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>User ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef>User Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.userName }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="onSelect(row)"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        #paginatorUR="matPaginator"
+        [length]="dataSource.data.length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+
+<br />
+<mat-divider></mat-divider>
+<br />

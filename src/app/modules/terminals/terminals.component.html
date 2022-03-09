@@ -1,0 +1,59 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <!-- <div> -->
+  <div fxFlex="20" *ngFor="let item of thumbNails">
+    <mat-card
+      class="thumbNail-card"
+      [ngStyle]="{ 'background-color': item.backColour }"
+    >
+      <mat-card-header class="thumbNail-card-header">
+        <mat-card-title>
+          <div class="card-title-text">{{ item.noOfSales }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
+        </mat-card-title>
+        <mat-card-title>
+          <div class="card-content-text">{{ item.itemName }}</div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content-common">
+        <div>
+          <!-- <i class="fa fa-clock faa-pulse"></i> -->
+          <span class="material-icons icon-ref">local_gas_station</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="20"></div>
+</div>
+
+<br />
+
+<mat-divider></mat-divider>
+
+<br />
+
+<div *ngFor="let terminal of terminals">
+  <div fxLayout="row" fxLayoutGap="20px">
+    <div fxFlex="20">
+      <h4><b>Serial #:</b> {{ terminal.serieal }}</h4>
+    </div>
+    <div fxFlex="20">
+      <h4><b>IP Address:</b> {{ terminal.ipAddress }}</h4>
+    </div>
+    <div fxFlex="30">
+      <mat-progress-bar
+        class="example-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="terminal.paperLevel"
+      >
+      </mat-progress-bar>
+    </div>
+  </div>
+  <br />
+
+  <mat-divider></mat-divider>
+
+  <br />
+</div>

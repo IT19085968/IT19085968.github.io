@@ -1,0 +1,15 @@
+<app-header
+  (toggleSideBarForMe)="sideBarToggler($event)"
+  class="my-alternate-theme"
+></app-header>
+
+<mat-drawer-container class="my-alternate-theme">
+  <mat-drawer mode="side" [opened]="sideBarOpen" class="my-alternate-theme">
+    <app-sidebar class="my-alternate-theme"></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content class="my-alternate-themes">
+    <router-outlet class="my-alternate-theme"></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<app-footer class="footerClass"></app-footer>

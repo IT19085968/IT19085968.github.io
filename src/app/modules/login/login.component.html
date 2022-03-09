@@ -1,0 +1,65 @@
+<!-- <span *ngIf="isUserLoggedIn"> You are logged In as {{ loggedUserName }} </span> -->
+<div class="outer">
+  <form [formGroup]="userFormGroup" *ngIf="!isUserLoggedIn" id="inner">
+    <mat-card
+      fxLayout="row"
+      fxLayoutAlign="space-around center"
+      fxLayoutGap="5px"
+      fxFlex="50"
+    >
+      <div fxFlex="13">
+        <img
+          src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
+          alt="Soufiane FADIL"
+        />
+      </div>
+      <div fxFlex="32">
+        <div class="form-group col-md-2">
+          <mat-form-field class="mat-form-field-fluid" appearance="outline">
+            <mat-label>User Name</mat-label>
+            <input
+              matInput
+              placeholder="Search"
+              [formControl]="userName"
+              placeholder="Search"
+              class="mat-form-field mat-form-field-fluid"
+            />
+            <mat-error *ngIf="userName.hasError('required')"
+              >User Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-2">
+          <mat-form-field class="mat-form-field-fluid" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Search"
+              [formControl]="password"
+              placeholder="Search"
+              class="mat-form-field mat-form-field-fluid"
+            />
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+              showPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+            <mat-error *ngIf="password.hasError('required')"
+              >Password is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex="15">
+        <button
+          mat-raised-button
+          matTooltip="Search by fields"
+          class="m-1 w-100"
+          (click)="loginUser()"
+          color="primary"
+        >
+          Login
+        </button>
+      </div>
+    </mat-card>
+  </form>
+</div>

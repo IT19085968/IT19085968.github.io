@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-drawer {
+  width: 350px;
+}
+
+mat-drawer-container {
+  height: 100%;
+}
+
+mat-drawer-content {
+  padding: 20px;
+  // background-color: rgb(237, 231, 237);
+  // background-color: rgb(133, 128, 128);
+}
+
+// .footerClass {
+//   background: #009688;
+// }
