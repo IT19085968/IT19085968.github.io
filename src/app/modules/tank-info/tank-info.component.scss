@@ -83,6 +83,14 @@ table {
   display: none !important;
 }
 
-svg > g[class^="raphael-group-"] > text {
+svg > g[class^="raphael-group-"][pointer-events="bounding-box"] > text {
+  display: none !important;
+}
+
+g[class^="raphael-group-"][class$="-creditgroup"][pointer-events="bounding-box"] {
+  display: none !important;
+}
+
+div[id^="fc-"] > span > svg > defs + g > g:nth-child(26) {
   display: none !important;
 }

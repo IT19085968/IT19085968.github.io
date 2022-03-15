@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <!-- <div> -->
-  <div fxFlex="20" *ngFor="let item of thumbNails">
+  <div fxFlex="25" *ngFor="let item of thumbNails">
     <mat-card
       class="thumbNail-card"
       [ngStyle]="{ 'background-color': item.backColour }"
@@ -79,12 +79,26 @@
           <th mat-header-cell *matHeaderCellDef>Paper Level</th>
           <td mat-cell *matCellDef="let element">
             <mat-progress-bar
-              class="example-margin"
+              class="example-margin green-progress"
               [color]="color"
               [mode]="mode"
               [value]="element.paperLevel"
             >
             </mat-progress-bar>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="printerStatus">
+          <th mat-header-cell *matHeaderCellDef>Printer Status</th>
+          <td mat-cell *matCellDef="let element">
+            <span
+              class="dot"
+              [ngStyle]="{
+                'background-color':
+                  element.printerStatus == 'idle' ? 'green' : 'red'
+              }"
+            ></span>
           </td>
         </ng-container>
 

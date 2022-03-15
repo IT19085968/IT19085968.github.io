@@ -30,7 +30,14 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild('paginatorTNK')
   paginatorTNK!: MatPaginator;
 
-  displayedColumns: string[] = ['serial', 'ipAddress', 'paperLevel'];
+  color2: any = null;
+
+  displayedColumns: string[] = [
+    'serial',
+    'ipAddress',
+    'paperLevel',
+    'printerStatus',
+  ];
 
   constructor(
     private dashboardService: DashboardService,
@@ -40,6 +47,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getThumbNails();
     this.getAllTerminals();
+    this.color2 = '#15E27D';
   }
 
   ngAfterViewInit(): void {

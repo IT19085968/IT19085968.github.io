@@ -34,6 +34,7 @@
   z-index: 0;
   font-size: 120px;
   color: rgba(255, 248, 248, 0.19);
+  margin: 5%;
 }
 
 .card-content-common {
@@ -72,4 +73,36 @@
 
 table {
   width: 100%;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 10%;
+}
+
+// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
+//   background-color: #4eb53f !important;
+// }
+
+div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
+  background-color: green;
+}
+
+.green-progress .mat-progress-bar-fill::after {
+  background-color: green !important;
+}
+
+div.mat-progress-bar-buffer.mat-progress-bar-element {
+  background-color: green !important;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: green;
+}
+.mat-progress-bar-buffer {
+  background: green;
 }
