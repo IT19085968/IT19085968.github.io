@@ -93,6 +93,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getDispenserInfo(): void {
     this.dashboardService.getDispenserInformation().subscribe((data) => {
       this.dataSourceDispenser.data = data;
+      console.log('dispensers: ', data);
     });
   }
 

@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
 import { TankInfo } from 'src/app/shared/models/TankInfo';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-tank-info',
   templateUrl: './tank-info.component.html',
   styleUrls: ['./tank-info.component.scss'],
 })
-export class TankInfoComponent implements OnInit {
+export class TankInfoComponent implements OnInit, AfterViewInit {
   tankInfo: any = [];
   noOfRows: any = [];
   upperLimitArray: any = [];
@@ -18,6 +20,21 @@ export class TankInfoComponent implements OnInit {
 
   thumbNails: any = [];
 
+  displayedColumns: string[] = [
+    'tankID',
+    'name',
+    'height',
+    'liters',
+    'waterLevel',
+    'temperature',
+    'ullage',
+  ];
+
+  dataSource = new MatTableDataSource<TankInfo>();
+
+  @ViewChild('paginatorTNK')
+  paginatorTNK!: MatPaginator;
+
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
@@ -26,12 +43,17 @@ export class TankInfoComponent implements OnInit {
     this.getThumbNails();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginatorTNK;
+  }
+
   getTankInfo(): void {
     const litresArray: any[] = [];
     let TotalHeight: number = 0;
 
     this.dashboardService.getTankInformation().subscribe((data) => {
       this.tankInfo = data;
+      this.dataSource.data = data;
 
       this.tankInfo.forEach((e: any, index: number) => {
         TotalHeight = Math.floor(+e.liters + +e.height);

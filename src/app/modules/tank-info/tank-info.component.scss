@@ -69,3 +69,20 @@
 .thumbNail-card-header {
   float: right;
 }
+
+table {
+  width: 100%;
+}
+
+.widget-Class {
+  font-family: Verdana, sans;
+  font-size: 9 to 0;
+}
+
+[pointer-events="bounding-box"] {
+  display: none !important;
+}
+
+svg > g[class^="raphael-group-"] > text {
+  display: none !important;
+}
