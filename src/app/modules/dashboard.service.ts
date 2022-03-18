@@ -6,12 +6,21 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { TRSearchModel } from '../shared/models/TRSearchModel';
+import * as moment from 'moment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
   readonly APIUrl = 'http://202.92.217.56:8281/flexapi/Dispenser';
+
+  currentDate: any = moment(new Date('2022-02-10')).format('YYYY-MM-DD')
+    ? moment(new Date('2022-02-10')).format('YYYY-MM-DD')
+    : moment(new Date()).format('YYYY-MM-DD');
+  anyText: string = this.authService.userData?.id
+    ? this.authService.userData?.id
+    : 'AA';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -20,7 +29,7 @@ export class DashboardService {
     }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getTankInformation(): Observable<any[]> {
     // return this.http.get<any>(this.APIUrl, this.httpOptions);
@@ -51,14 +60,14 @@ export class DashboardService {
 
   getProductSales(): Observable<any[]> {
     return this.http.get<any>(
-      `${environment.apiURL}/Dashboard/ProductSales/2022-02-10`,
+      `${environment.apiURL}/Dashboard/ProductSales/${this.currentDate}`,
       this.httpOptions
     );
   }
 
   getThumbNails(): Observable<any[]> {
     return this.http.get<any>(
-      `${environment.apiURL}/Dashboard/Thumbs/2022-02-10`,
+      `${environment.apiURL}/Dashboard/Thumbs/${this.currentDate}`,
       this.httpOptions
     );
   }
@@ -141,6 +150,61 @@ export class DashboardService {
       {
         name: 'Sales & Distribution',
         data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+      },
+    ];
+  }
+
+  column() {
+    return [
+      {
+        name: 'Tokyo',
+        y: 49.9,
+      },
+    ];
+  }
+
+  column2() {
+    return [
+      {
+        name: 'Browsers',
+        colorByPoint: true,
+        data: [
+          {
+            name: 'Chrome',
+            y: 62.74,
+            drilldown: 'Chrome',
+          },
+          {
+            name: 'Firefox',
+            y: 10.57,
+            drilldown: 'Firefox',
+          },
+          {
+            name: 'Internet Explorer',
+            y: 7.23,
+            drilldown: 'Internet Explorer',
+          },
+          {
+            name: 'Safari',
+            y: 5.58,
+            drilldown: 'Safari',
+          },
+          {
+            name: 'Edge',
+            y: 4.02,
+            drilldown: 'Edge',
+          },
+          {
+            name: 'Opera',
+            y: 1.92,
+            drilldown: 'Opera',
+          },
+          {
+            name: 'Other',
+            y: 7.62,
+            drilldown: null,
+          },
+        ],
       },
     ];
   }

@@ -16,10 +16,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // bigChart: any = [];
   // Cards: any = [];
   pieChartInfo: any = [];
-  // columnChartInfo: any = [];
+  columnChartInfo: any = [];
   username: string = 'flexapiuser@felxapi.com';
   password: string = 'f!3x@P1u8eRUt';
   categories: any = [];
+  colours: any = [];
   thumbNails: any = [];
 
   barInfo: any = [];
@@ -29,7 +30,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   upperLimitArray: any = [];
   title1: string = 'Hourly Sales by Grade';
   title2: string = 'Average Hourly Sales by Grade';
-  title3: string = 'Product Sales';
+  title3: string = 'Population of Grades';
+  title4: string = 'Current Sales by Grade';
 
   displayedColumns: string[] = [
     'tankID',
@@ -69,7 +71,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     // this.bigChart = this.dashboardService.bigChart();
     // this.Cards = this.dashboardService.cards();
-    // this.columnChartInfo = this.dashboardService.column();
+    this.columnChartInfo = this.dashboardService.column();
     this.barInfo = this.dashboardService.bar();
     this.lineChartInfo = this.dashboardService.line();
     this.currentSalesInfo = this.lineChartInfo;
@@ -103,9 +105,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // const heightArray: any[] = [];
     const ullageArray: any[] = [];
     const waterLevelArray: any[] = [];
-    // const columnInfo: any[] = [];
+
     const barInfo: any[] = [];
-    const categories: any[] = [];
+
     let TotalHeight: number = 0;
 
     this.dashboardService.getTankInformation().subscribe((data) => {
@@ -119,7 +121,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         // heightArray.push(+TotalHeight);
         ullageArray.push(+e.ullage);
         waterLevelArray.push(+e.waterLevel);
-        categories.push(e.productName);
       });
 
       // this.pieChartInfo = pieChartInfo;
@@ -150,8 +151,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         data: waterLevelArray,
       });
 
-      // this.columnChartInfo = columnInfo;
-      this.categories = categories;
       this.barInfo = barInfo;
 
       // console.log('column1: ', this.columnChartInfo);
@@ -201,10 +200,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   getProductSales(): void {
     const pieChartInfo: any[] = [];
+    const columnInfo: any[] = [];
+    const fullColumnInfo: any[] = [];
+    const categories: any[] = [];
+    // const colours: any[] = [];
     this.dashboardService.getProductSales().subscribe((data) => {
       data.forEach((e: any) => {
         pieChartInfo.push({ name: e.productName, y: +e.totalAmount });
+        categories.push(e.productName);
+        columnInfo.push(+e.totalAmount);
+        // colours.push('#' + e.backColour);
       });
+
+      fullColumnInfo.push({
+        name: 'Grades',
+        data: columnInfo,
+      });
+
+      this.columnChartInfo = fullColumnInfo;
+      this.categories = categories;
+      // this.colours = colours;
 
       this.pieChartInfo = pieChartInfo;
       console.log('product sales: ', data);
@@ -212,8 +227,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getThumbNails(): void {
+    const colours: any[] = [];
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
+      data.forEach((e: any) => {
+        colours.push(e.backColour);
+      });
+
+      this.colours = colours;
+
       console.log('thumbnails: ', this.thumbNails);
     });
   }

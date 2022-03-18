@@ -1,0 +1,13 @@
+// .stylesC {
+// fusioncharts {
+//   g[class$="creditgroup"] {
+//     display: none !important;
+//   }
+// }
+// }
+
+fusioncharts {
+  [pointer-events="bounding-box"] {
+    display: none !important;
+  }
+}

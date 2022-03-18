@@ -19,6 +19,8 @@ export class PieComponent implements OnInit, OnChanges {
   @Input() data = [];
   @Input() title = '';
   Highcharts = Highcharts;
+  testWidth: any = '100%';
+  testHeight: any = '400px';
 
   chartOptions = {};
 

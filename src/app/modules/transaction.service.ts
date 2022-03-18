@@ -48,4 +48,18 @@ export class TransactionService {
       this.httpOptions
     );
   }
+
+  getDeliveryTotals(FromDate: any, ToDate: any): Observable<any[]> {
+    return this.http.get<any>(
+      `${environment.apiURL}/Transactions/DeliveryTotals?FromDate=${FromDate}&ToDate=${ToDate}`,
+      this.httpOptions
+    );
+  }
+
+  getElectronicTotals(AsAtDate: any): Observable<any[]> {
+    return this.http.get<any>(
+      `${environment.apiURL}/Transactions/ElectronicTotals?AsAtDate=${AsAtDate}`,
+      this.httpOptions
+    );
+  }
 }

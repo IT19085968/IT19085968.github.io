@@ -3,7 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { DashboardService } from '../dashboard.service';
+import { TransactionService } from '../transaction.service';
 import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
+import { deliveryTotals } from '../../shared/models/deliveryTotals';
+import { electronicTotals } from '../../shared/models/electronicTotals';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dispenser-status',
@@ -11,7 +17,11 @@ import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
   styleUrls: ['./dispenser-status.component.scss'],
 })
 export class DispenserStatusComponent implements OnInit, AfterViewInit {
+  searchDeliveryFormGroup!: FormGroup;
+  searchElectFormGroup!: FormGroup;
   dataSourceDispenser = new MatTableDataSource<DispenserInfo>();
+  dataSourceDeliveryTotals = new MatTableDataSource<deliveryTotals>();
+  dataSourceElectronicTotals = new MatTableDataSource<electronicTotals>();
 
   displayedColumnsDispenser: string[] = [
     'dispenser',
@@ -21,20 +31,60 @@ export class DispenserStatusComponent implements OnInit, AfterViewInit {
     'volume',
   ];
 
+  displayedColumnsDelivery: string[] = [
+    'deliveryID',
+    'productID',
+    'productName',
+    'updatedBy',
+    'updatedAt',
+    'volume',
+    'price',
+    'amount',
+    'transDate',
+    'transTime',
+  ];
+
+  displayedColumnsElectronics: string[] = [
+    'terminal',
+    'pump',
+    'productID',
+    'productName',
+    'price',
+    'amount',
+    'volume',
+    'deliveries',
+  ];
+
   thumbNails: any = [];
 
   @ViewChild('paginatorDPN')
   paginatorDPN!: MatPaginator;
 
-  constructor(private dashboardService: DashboardService) {}
+  @ViewChild('paginatorDEL')
+  paginatorDEL!: MatPaginator;
+
+  @ViewChild('paginatorELEC')
+  paginatorELEC!: MatPaginator;
+
+  subscriptions: Subscription[] = [];
+
+  constructor(
+    private dashboardService: DashboardService,
+    private transactionService: TransactionService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.getDispenserInfo();
     this.getThumbNails();
+    this.createDeliveryForm();
+    this.createElectronicForm();
   }
 
   ngAfterViewInit(): void {
     this.dataSourceDispenser.paginator = this.paginatorDPN;
+    this.dataSourceDeliveryTotals.paginator = this.paginatorDEL;
+    this.dataSourceElectronicTotals.paginator = this.paginatorELEC;
   }
 
   getDispenserInfo(): void {
@@ -48,5 +98,67 @@ export class DispenserStatusComponent implements OnInit, AfterViewInit {
       this.thumbNails = data;
       console.log('thumbnails: ', this.thumbNails);
     });
+  }
+
+  createDeliveryForm(): void {
+    this.searchDeliveryFormGroup = this.formBuilder.group({
+      FromDate: [''],
+      ToDate: [''],
+    });
+  }
+
+  createElectronicForm(): void {
+    this.searchElectFormGroup = this.formBuilder.group({
+      AsAtDate: [''],
+    });
+  }
+
+  getDeliveryTotals(): void {
+    const filter: any = {};
+
+    filter.FromDate = this.searchDeliveryFormGroup?.value.FromDate
+      ? moment(this.searchDeliveryFormGroup?.value.FromDate).format(
+          'YYYY-MM-DD'
+        )
+      : null;
+    filter.ToDate = this.searchDeliveryFormGroup?.value.ToDate
+      ? moment(this.searchDeliveryFormGroup?.value.ToDate).format('YYYY-MM-DD')
+      : null;
+
+    const subscription: any = this.transactionService
+      .getDeliveryTotals(filter.FromDate, filter.ToDate)
+      .subscribe((data) => {
+        console.log('deliveries: ', data);
+        this.dataSourceDeliveryTotals.data = data;
+      });
+
+    this.subscriptions.push(subscription);
+  }
+
+  getElectronicTotals(): void {
+    const filter: any = {};
+
+    filter.AsAtDate = this.searchElectFormGroup?.value.AsAtDate
+      ? moment(this.searchElectFormGroup?.value.AsAtDate).format('YYYY-MM-DD')
+      : null;
+
+    const subscription: any = this.transactionService
+      .getElectronicTotals(filter.AsAtDate)
+      .subscribe((data) => {
+        console.log('electronic: ', data);
+        this.dataSourceElectronicTotals.data = data;
+      });
+
+    this.subscriptions.push(subscription);
+  }
+
+  clearFieldsDel(): void {
+    this.searchDeliveryFormGroup.reset();
+    this.dataSourceDeliveryTotals.data = [];
+  }
+
+  clearFieldsElec(): void {
+    this.searchElectFormGroup.reset();
+    this.dataSourceElectronicTotals.data = [];
   }
 }

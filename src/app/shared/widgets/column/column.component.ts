@@ -15,6 +15,8 @@ import HC_exporting from 'highcharts/modules/exporting';
 })
 export class ColumnComponent implements OnInit, OnChanges {
   @Input() data = [];
+  @Input() colours = [];
+  @Input() title = '';
   @Input() categories = [];
   chartOptions: any = {};
 
@@ -28,24 +30,19 @@ export class ColumnComponent implements OnInit, OnChanges {
         type: 'column',
       },
       title: {
-        text: 'Efficiency Optimization by Branch',
+        text: this.title,
       },
       xAxis: {
         categories: this.categories,
+        crosshair: true,
       },
       yAxis: [
         {
           min: 0,
           title: {
-            text: 'Total Height',
+            text: 'Sales',
           },
         },
-        // {
-        //   title: {
-        //     text: 'Profit (millions)',
-        //   },
-        //   opposite: true,
-        // },
       ],
       legend: {
         shadow: false,
@@ -55,11 +52,12 @@ export class ColumnComponent implements OnInit, OnChanges {
       },
       plotOptions: {
         column: {
-          grouping: false,
-          shadow: false,
+          pointPadding: 0.2,
           borderWidth: 0,
+          colorByPoint: true,
         },
       },
+      colors: this.colours,
       exporting: {
         enabled: true,
       },
@@ -82,16 +80,17 @@ export class ColumnComponent implements OnInit, OnChanges {
         type: 'column',
       },
       title: {
-        text: 'Tank Information',
+        text: this.title,
       },
       xAxis: {
         categories: this.categories,
+        crosshair: true,
       },
       yAxis: [
         {
           min: 0,
           title: {
-            text: 'Total Height',
+            text: 'Sales',
           },
         },
       ],
@@ -103,11 +102,12 @@ export class ColumnComponent implements OnInit, OnChanges {
       },
       plotOptions: {
         column: {
-          grouping: false,
-          shadow: false,
+          pointPadding: 0.2,
           borderWidth: 0,
+          colorByPoint: true,
         },
       },
+      colors: this.colours,
       exporting: {
         enabled: true,
       },

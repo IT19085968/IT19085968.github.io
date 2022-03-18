@@ -88,21 +88,21 @@ table {
 //   background-color: #4eb53f !important;
 // }
 
-div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
-  background-color: green;
+// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
+//   background-color: green;
+// }
+
+// .green-progress .mat-progress-bar-fill::after {
+//   background-color: green !important;
+// }
+
+div.mat-progress-bar-buffer.mat-progress-bar-element::after.mat-progress-bar-fill::after {
+  background-color: #3fb55d;
 }
 
-.green-progress .mat-progress-bar-fill::after {
-  background-color: green !important;
-}
-
-div.mat-progress-bar-buffer.mat-progress-bar-element {
-  background-color: green !important;
-}
-
-.mat-progress-bar-fill::after {
-  background-color: green;
-}
-.mat-progress-bar-buffer {
-  background: green;
-}
+// .mat-progress-bar-fill::after {
+//   background-color: green;
+// }
+// .mat-progress-bar-buffer {
+//   background: green;
+// }
