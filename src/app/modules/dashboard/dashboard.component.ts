@@ -17,9 +17,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // Cards: any = [];
   pieChartInfo: any = [];
   columnChartInfo: any = [];
+  columnTerminals: any = [];
   username: string = 'flexapiuser@felxapi.com';
   password: string = 'f!3x@P1u8eRUt';
   categories: any = [];
+  catTerminals: any = [];
   colours: any = [];
   thumbNails: any = [];
 
@@ -32,6 +34,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   title2: string = 'Average Hourly Sales by Grade';
   title3: string = 'Population of Grades';
   title4: string = 'Current Sales by Grade';
+  title5: string = 'Current Sales by Terminal';
 
   displayedColumns: string[] = [
     'tankID',
@@ -68,10 +71,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.categories = ['Seattle HQ', 'San Francisco', 'Tokyo'];
+    this.catTerminals = ['Seattle HQ', 'San Francisco', 'Tokyo'];
 
     // this.bigChart = this.dashboardService.bigChart();
     // this.Cards = this.dashboardService.cards();
     this.columnChartInfo = this.dashboardService.column();
+    this.columnTerminals = this.dashboardService.column();
     this.barInfo = this.dashboardService.bar();
     this.lineChartInfo = this.dashboardService.line();
     this.currentSalesInfo = this.lineChartInfo;
@@ -84,6 +89,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.getCurrentHourlySales();
     this.getAvgCurrentHourlySales();
     this.getProductSales();
+    this.getTerminalSales();
     this.getThumbNails();
   }
 
@@ -223,6 +229,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
       this.pieChartInfo = pieChartInfo;
       console.log('product sales: ', data);
+    });
+  }
+
+  getTerminalSales(): void {
+    const columnInfo: any[] = [];
+    const fullColumnInfo: any[] = [];
+    const categories: any[] = [];
+
+    this.dashboardService.getTerminalSales().subscribe((data) => {
+      data.forEach((e: any) => {
+        categories.push(e.terminalId);
+        columnInfo.push(+e.terminalName);
+      });
+
+      fullColumnInfo.push({
+        name: 'Terminals',
+        data: columnInfo,
+      });
+
+      this.columnTerminals = fullColumnInfo;
+      this.catTerminals = categories;
+      console.log('terminals: ', data);
     });
   }
 

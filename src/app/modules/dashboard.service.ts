@@ -46,14 +46,14 @@ export class DashboardService {
 
   getHourlySalesCurrent(): Observable<any[]> {
     return this.http.get<any>(
-      `${environment.apiURL}/Dashboard/HourlySalesCurrent/2022-02-10?uniqueID="AA"`,
+      `${environment.apiURL}/Dashboard/HourlySalesCurrent/${this.currentDate}?uniqueID="AA"`,
       this.httpOptions
     );
   }
 
   getAvgHourlySalesCurrent(): Observable<any[]> {
     return this.http.get<any>(
-      `${environment.apiURL}/Dashboard/HourlySalesAvg/2022-02-10?uniqueID="AA"`,
+      `${environment.apiURL}/Dashboard/HourlySalesAvg/${this.currentDate}?uniqueID=${this.anyText}`,
       this.httpOptions
     );
   }
@@ -61,6 +61,13 @@ export class DashboardService {
   getProductSales(): Observable<any[]> {
     return this.http.get<any>(
       `${environment.apiURL}/Dashboard/ProductSales/${this.currentDate}`,
+      this.httpOptions
+    );
+  }
+
+  getTerminalSales(): Observable<any[]> {
+    return this.http.get<any>(
+      `${environment.apiURL}/Dashboard/TerminalSales/${this.currentDate}`,
       this.httpOptions
     );
   }
@@ -159,52 +166,6 @@ export class DashboardService {
       {
         name: 'Tokyo',
         y: 49.9,
-      },
-    ];
-  }
-
-  column2() {
-    return [
-      {
-        name: 'Browsers',
-        colorByPoint: true,
-        data: [
-          {
-            name: 'Chrome',
-            y: 62.74,
-            drilldown: 'Chrome',
-          },
-          {
-            name: 'Firefox',
-            y: 10.57,
-            drilldown: 'Firefox',
-          },
-          {
-            name: 'Internet Explorer',
-            y: 7.23,
-            drilldown: 'Internet Explorer',
-          },
-          {
-            name: 'Safari',
-            y: 5.58,
-            drilldown: 'Safari',
-          },
-          {
-            name: 'Edge',
-            y: 4.02,
-            drilldown: 'Edge',
-          },
-          {
-            name: 'Opera',
-            y: 1.92,
-            drilldown: 'Opera',
-          },
-          {
-            name: 'Other',
-            y: 7.62,
-            drilldown: null,
-          },
-        ],
       },
     ];
   }

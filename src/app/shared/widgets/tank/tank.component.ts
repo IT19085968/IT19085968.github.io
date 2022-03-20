@@ -23,6 +23,7 @@ export class TankComponent implements OnInit, OnChanges {
   width: any = '100%';
   height: any = 350;
   type: any = 'cylinder';
+  stylesClass: string = '';
 
   chartOptions = {};
 
@@ -42,9 +43,14 @@ export class TankComponent implements OnInit, OnChanges {
         cylfillhoveralpha: '85',
         theme: 'fusion',
         plotBackgroundColor: 'blue',
+        raphaelgroupfillcolor: '#ffffff',
       },
       value: this.litres,
     };
+
+    setTimeout(() => {
+      this.stylesClass = 'stylesC';
+    }, 60000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,6 +66,7 @@ export class TankComponent implements OnInit, OnChanges {
         plottooltext: 'LPG Consumption: <b>' + this.litres + ' ltrs</b>',
         cylfillhoveralpha: '85',
         theme: 'fusion',
+        raphaelgroupfillcolor: '#ffffff',
       },
       value: this.litres,
     };

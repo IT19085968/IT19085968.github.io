@@ -33,65 +33,11 @@
 
 <br />
 
-<div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="20px">
-  <!-- <div fxFlex="65">
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSourceDispenser">
-        
-        <ng-container matColumnDef="dispenser">
-          <th mat-header-cell *matHeaderCellDef>Dispenser</th>
-          <td mat-cell *matCellDef="let element">{{ element.dispenser }}</td>
-        </ng-container>
-
-        
-        <ng-container matColumnDef="dispenserState">
-          <th mat-header-cell *matHeaderCellDef>Dispenser State</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.dispenserState }}
-          </td>
-        </ng-container>
-
-        
-        <ng-container matColumnDef="nozzleState">
-          <th mat-header-cell *matHeaderCellDef>Nozzle State</th>
-          <td mat-cell *matCellDef="let element">{{ element.nozzleState }}</td>
-        </ng-container>
-
-        
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef>Amount</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.amount }}
-          </td>
-        </ng-container>
-
-        
-        <ng-container matColumnDef="volume">
-          <th mat-header-cell *matHeaderCellDef>Volume</th>
-          <td mat-cell *matCellDef="let element">{{ element.volume }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsDispenser"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumnsDispenser"
-        ></tr>
-      </table>
-
-      <mat-paginator
-        #paginatorDPN="matPaginator"
-        [length]="dataSourceDispenser.data.length"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-        aria-label="Select page of periodic elements"
-      >
-      </mat-paginator>
-    </div>
-  </div> -->
-  <div fxFlex="50" fxLayout="column">
+<div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="10px">
+  <div fxFlex="40">
     <app-widget-pie [data]="pieChartInfo" [title]="title3"></app-widget-pie>
-    <br />
+  </div>
+  <div fxFlex="30">
     <app-widget-column
       [data]="columnChartInfo"
       [categories]="categories"
@@ -99,62 +45,53 @@
       [colours]="colours"
     ></app-widget-column>
   </div>
-
-  <div fxFlex="60" fxLayout="column">
-    <div fxFlex="50">
-      <app-widget-line
-        [data]="currentSalesInfo"
-        [title]="title1"
-      ></app-widget-line>
-    </div>
-    <br />
-    <div fxFlex="50">
-      <app-widget-line [data]="avgSalesInfo" [title]="title2"></app-widget-line>
-    </div>
+  <div fxFlex="30">
+    <app-widget-column
+      [data]="columnTerminals"
+      [categories]="catTerminals"
+      [title]="title5"
+      [colours]="colours"
+    ></app-widget-column>
   </div>
 </div>
-<!-- <br />
-<mat-divider></mat-divider>
 
-<br /> -->
+<br />
 
-<div class="profile-card">
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+  <div fxFlex="80">
+    <app-widget-line
+      [data]="currentSalesInfo"
+      [title]="title1"
+    ></app-widget-line>
+  </div>
+</div>
+
+<br />
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+  <div fxFlex="80">
+    <app-widget-line [data]="avgSalesInfo" [title]="title2"></app-widget-line>
+  </div>
+</div>
+
+<br />
+<br />
+
+<!-- <div class="profile-card">
   <div class="header">
     <h1>Tank Information</h1>
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
   <div fxFlex="30" *ngFor="let tank of dataSource.data; let i = index">
-    <!-- <app-widget-bar [data]="barInfo" [categories]="categories"></app-widget-bar> -->
     <app-widget-tank
       [uppeLimit]="upperLimitArray[i]"
       [litres]="tank.liters"
       [caption]="tank.productName"
     ></app-widget-tank>
   </div>
-  <!-- <div fxFlex="30">
-    <app-widget-tank
-      [uppeLimit]="limit2"
-      [litres]="litres2"
-      [caption]="caption2"
-    ></app-widget-tank>
-  </div>
-  <div fxFlex="30">
-    <app-widget-tank
-      [uppeLimit]="limit3"
-      [litres]="litres3"
-      [caption]="caption3"
-    ></app-widget-tank>
-  </div> -->
-  <!-- <div fxFlex="35">
-    <app-widget-column
-      [data]="columnChartInfo"
-      [categories]="categories"
-    ></app-widget-column>
-  </div> -->
+  
 </div>
 <br />
-<!-- <mat-divider></mat-divider> -->
 
 <br />
 
@@ -162,25 +99,25 @@
   <div fxFlex="65">
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
-        <!-- Position Column -->
+        
         <ng-container matColumnDef="tankID">
           <th mat-header-cell *matHeaderCellDef>TankID</th>
           <td mat-cell *matCellDef="let element">{{ element.tankID }}</td>
         </ng-container>
 
-        <!-- Name Column -->
+        
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
         </ng-container>
 
-        <!-- Weight Column -->
+        
         <ng-container matColumnDef="height">
           <th mat-header-cell *matHeaderCellDef>Height</th>
           <td mat-cell *matCellDef="let element">{{ element.height }}</td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        
         <ng-container matColumnDef="liters">
           <th mat-header-cell *matHeaderCellDef>Liters</th>
           <td mat-cell *matCellDef="let element">
@@ -188,19 +125,19 @@
           </td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        
         <ng-container matColumnDef="waterLevel">
           <th mat-header-cell *matHeaderCellDef>Water Level</th>
           <td mat-cell *matCellDef="let element">{{ element.waterLevel }}</td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        
         <ng-container matColumnDef="temperature">
           <th mat-header-cell *matHeaderCellDef>Temperature</th>
           <td mat-cell *matCellDef="let element">{{ element.tempreture }}</td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        
         <ng-container matColumnDef="ullage">
           <th mat-header-cell *matHeaderCellDef>Ullage</th>
           <td mat-cell *matCellDef="let element">{{ element.ullage }}</td>
@@ -220,34 +157,11 @@
       >
       </mat-paginator>
     </div>
-    <!-- <div fxFlex="35">
-      <app-widget-column
-        [data]="columnChartInfo"
-        [categories]="categories"
-      ></app-widget-column>
-    </div> -->
   </div>
-  <!-- <div fxFlex="40">
-    <app-widget-pie [data]="pieChartInfo"></app-widget-pie>
-  </div> -->
 </div>
 
 <br />
 <mat-divider></mat-divider>
 
 <br />
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-  <div fxFlex="50">
-    <app-widget-line
-      [data]="currentSalesInfo"
-      [title]="title1"
-    ></app-widget-line>
-  </div>
-  <div fxFlex="50">
-    <app-widget-line [data]="avgSalesInfo" [title]="title2"></app-widget-line>
-  </div>
-</div>
-<br />
-
-<br />
-<br />
+<br /> -->

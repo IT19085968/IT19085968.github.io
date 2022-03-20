@@ -96,13 +96,87 @@ table {
 //   background-color: green !important;
 // }
 
-div.mat-progress-bar-buffer.mat-progress-bar-element::after.mat-progress-bar-fill::after {
-  background-color: #3fb55d;
+// div.mat-progress-bar-buffer.mat-progress-bar-element::after.mat-progress-bar-fill::after {
+//   background-color: #3fb55d;
+// }
+
+// .mat-progress-bar {
+//   height: 14px;
+//   background-color: #ededed;
+//   border-radius: 40px;
+// }
+
+// .mat-progress-bar.mat-progress-bar-buffer {
+//   background: #62b414;
+// }
+
+// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
+
+//   border-radius: 40px;
+//   transition-delay: 50s;
+// }
+
+.audio-progress-bar {
+  &.mat-progress-bar {
+    height: 14px;
+    // border-radius: 40px;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: rgb(15, 154, 51);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: #d7f1e0;
+  }
+
+  /* remove animation and the dots*/
+  .mat-progress-bar-background {
+    animation: none;
+    background-color: #eceff1;
+    fill: #eceff1;
+  }
 }
 
-// .mat-progress-bar-fill::after {
-//   background-color: green;
-// }
-// .mat-progress-bar-buffer {
-//   background: green;
-// }
+.mat-column-one {
+  &.mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.mat-column-two {
+  &.mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+.mat-column-three {
+  &.mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+.mat-column-four {
+  &.mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.mat-column-five {
+  &th.mat-header-cell,
+  .mat-cell,
+  .mat-footer-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

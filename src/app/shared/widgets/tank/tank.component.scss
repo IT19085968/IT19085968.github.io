@@ -6,8 +6,20 @@
 // }
 // }
 
-fusioncharts {
-  [pointer-events="bounding-box"] {
-    display: none !important;
-  }
+// fusioncharts {
+//   [pointer-events="bounding-box"] {
+//     display: none !important;
+//   }
+// }
+
+// g[class^="raphael-group-"] {
+//   display: none !important;
+// }
+
+// div[id^="raphael-group-"] > span > svg > defs + g > g:nth-child(26) {
+//   display: none !important;
+// }
+
+.stylesC div span svg g[class*="raphael-group-"] {
+  display: none !important;
 }

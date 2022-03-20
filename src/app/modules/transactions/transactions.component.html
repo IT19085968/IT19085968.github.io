@@ -1,7 +1,7 @@
 <!-- <div class="card card-body mb-3"> -->
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <!-- <div> -->
-  <div fxFlex="20" *ngFor="let item of thumbNails">
+  <div fxFlex="25" *ngFor="let item of thumbNails">
     <mat-card
       class="thumbNail-card"
       [ngStyle]="{ 'background-color': item.backColour }"
@@ -107,8 +107,12 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
-    <div class="form-group col-md-2">
-      <mat-form-field class="mat-form-field-fluid" appearance="outline">
+    <!-- <div fxFlex="80"></div> -->
+    <div class="form-group col-md-2" fxFlex="60">
+      <mat-form-field
+        class="mat-form-field-fluid searchClass"
+        appearance="outline"
+      >
         <input
           matInput
           placeholder="Search"
@@ -119,7 +123,7 @@
         <mat-hint align="start"> <strong>Search</strong> by string. </mat-hint>
       </mat-form-field>
     </div>
-    <div class="footerButtons" fxLayoutGap="10px">
+    <div class="footerButtons" fxLayoutGap="10px" fxFlex="60">
       <button
         mat-raised-button
         color="accent"

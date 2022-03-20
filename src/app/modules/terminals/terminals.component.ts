@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProgressBarMode } from '@angular/material/progress-bar';
@@ -18,6 +24,7 @@ import { TerminalsService } from '../terminals.service';
   selector: 'app-terminals',
   templateUrl: './terminals.component.html',
   styleUrls: ['./terminals.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TerminalsComponent implements OnInit, AfterViewInit {
   color: ThemePalette = 'primary';
@@ -37,6 +44,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
     'ipAddress',
     'paperLevel',
     'printerStatus',
+    'terminalStatus',
   ];
 
   constructor(

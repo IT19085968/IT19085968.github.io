@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -16,7 +22,9 @@ import * as moment from 'moment';
   templateUrl: './dispenser-status.component.html',
   styleUrls: ['./dispenser-status.component.scss'],
 })
-export class DispenserStatusComponent implements OnInit, AfterViewInit {
+export class DispenserStatusComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   searchDeliveryFormGroup!: FormGroup;
   searchElectFormGroup!: FormGroup;
   dataSourceDispenser = new MatTableDataSource<DispenserInfo>();
@@ -160,5 +168,11 @@ export class DispenserStatusComponent implements OnInit, AfterViewInit {
   clearFieldsElec(): void {
     this.searchElectFormGroup.reset();
     this.dataSourceElectronicTotals.data = [];
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
   }
 }
