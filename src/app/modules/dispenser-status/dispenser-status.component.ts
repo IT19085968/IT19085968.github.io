@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -14,8 +15,9 @@ import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
 import { deliveryTotals } from '../../shared/models/deliveryTotals';
 import { electronicTotals } from '../../shared/models/electronicTotals';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { of, Subject, Subscription, timer } from 'rxjs';
 import * as moment from 'moment';
+import { catchError, filter, multicast, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dispenser-status',
@@ -27,7 +29,7 @@ export class DispenserStatusComponent
 {
   searchDeliveryFormGroup!: FormGroup;
   searchElectFormGroup!: FormGroup;
-  dataSourceDispenser = new MatTableDataSource<DispenserInfo>();
+  dataSourceDispenser = new MatTableDataSource<any>();
   dataSourceDeliveryTotals = new MatTableDataSource<deliveryTotals>();
   dataSourceElectronicTotals = new MatTableDataSource<electronicTotals>();
 
@@ -79,7 +81,8 @@ export class DispenserStatusComponent
   constructor(
     private dashboardService: DashboardService,
     private transactionService: TransactionService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private changeDetectorRefs: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -96,9 +99,28 @@ export class DispenserStatusComponent
   }
 
   getDispenserInfo(): void {
-    this.dashboardService.getDispenserInformation().subscribe((data) => {
+    const sub1: any = timer(0, 15000).pipe(
+      switchMap((x) => {
+        console.log('api call: ', x);
+        return this.dashboardService.getDispenserInformation().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    sub1.subscribe((data: any[]) => {
       this.dataSourceDispenser.data = data;
+      this.changeDetectorRefs.detectChanges();
+      console.log('sub1: ', sub1);
     });
+
+    sub1.connect();
+
+    this.subscriptions.push(sub1);
   }
 
   getThumbNails(): void {
