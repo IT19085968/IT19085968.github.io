@@ -122,8 +122,5 @@ export class ColumnComponent implements OnInit, OnChanges {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 300);
-
-    console.log('from column: ', this.data);
-    console.log('from column cat: ', this.categories);
   }
 }

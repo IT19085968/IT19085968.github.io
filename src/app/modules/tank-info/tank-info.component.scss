@@ -29,11 +29,14 @@
 .icon-ref {
   transition: all 0.3s linear;
   position: absolute;
-  top: 0px;
-  left: -5px;
+  top: 25px;
+  left: 25px;
   z-index: 0;
-  font-size: 120px;
-  color: rgba(255, 248, 248, 0.19);
+  font-size: 80px;
+  color: rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  border: 3px solid;
+  padding: 5px;
 }
 
 .card-content-common {
@@ -45,17 +48,19 @@
   margin: 0 -15px;
   color: azure;
   font-size: 28px;
+  font-weight: lighter;
 }
 
 .card-title-text2 {
   color: azure;
   margin-top: 40px;
   margin-right: -100px;
+  font-weight: lighter;
 }
 
 .card-content-text {
   color: azure;
-  font-size: initial;
+  font-size: 17px;
   // margin-right: 50px;
   // float: right;
   // font-weight: 500;
@@ -79,18 +84,4 @@ table {
   font-size: 9 to 0;
 }
 
-[pointer-events="bounding-box"] {
-  display: none !important;
-}
 
-svg > g[class^="raphael-group-"][pointer-events="bounding-box"] > text {
-  display: none !important;
-}
-
-g[class^="raphael-group-"][class$="-creditgroup"][pointer-events="bounding-box"] {
-  display: none !important;
-}
-
-div[id^="fc-"] > span > svg > defs + g > g:nth-child(26) {
-  display: none !important;
-}

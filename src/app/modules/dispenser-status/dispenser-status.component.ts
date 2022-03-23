@@ -17,7 +17,13 @@ import { electronicTotals } from '../../shared/models/electronicTotals';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { of, Subject, Subscription, timer } from 'rxjs';
 import * as moment from 'moment';
-import { catchError, filter, multicast, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  filter,
+  multicast,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-dispenser-status',
@@ -77,6 +83,9 @@ export class DispenserStatusComponent
   paginatorELEC!: MatPaginator;
 
   subscriptions: Subscription[] = [];
+  timerSub: any = [];
+
+  testSubject = new Subject();
 
   constructor(
     private dashboardService: DashboardService,
@@ -99,7 +108,8 @@ export class DispenserStatusComponent
   }
 
   getDispenserInfo(): void {
-    const sub1: any = timer(0, 15000).pipe(
+    let timerTest: any = timer(0, 15000).pipe(
+      takeUntil(this.testSubject),
       switchMap((x) => {
         console.log('api call: ', x);
         return this.dashboardService.getDispenserInformation().pipe(
@@ -112,15 +122,17 @@ export class DispenserStatusComponent
       }),
       multicast(() => new Subject())
     );
-    sub1.subscribe((data: any[]) => {
-      this.dataSourceDispenser.data = data;
-      this.changeDetectorRefs.detectChanges();
-      console.log('sub1: ', sub1);
-    });
+    this.timerSub.push(
+      timerTest.subscribe((data: any[]) => {
+        this.dataSourceDispenser.data = data;
+        this.changeDetectorRefs.detectChanges();
+        console.log('timerTest: ', timerTest);
+      })
+    );
 
-    sub1.connect();
+    timerTest.connect();
 
-    this.subscriptions.push(sub1);
+    // this.subscriptions.push(this.timerSub);
   }
 
   getThumbNails(): void {
@@ -193,8 +205,12 @@ export class DispenserStatusComponent
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub: Subscription) => {
+    this.testSubject.next();
+    this.timerSub.forEach((sub: Subscription) => {
       sub.unsubscribe();
+    });
+    this.subscriptions.forEach((sub: Subscription) => {
+      sub ? sub.unsubscribe() : null;
     });
   }
 }

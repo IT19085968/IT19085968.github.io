@@ -26,9 +26,7 @@ export class PieComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('from pie: ', this.data);
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.chartOptions = {
@@ -79,6 +77,5 @@ export class PieComponent implements OnInit, OnChanges {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 300);
-    console.log('from pie3: ', this.data);
   }
 }
