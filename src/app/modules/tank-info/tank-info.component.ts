@@ -60,19 +60,8 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
     const litresArray: any[] = [];
     let TotalHeight: number = 0;
 
-    const sub1: any = timer(0, 60000)
-      .pipe(
-        switchMap(() => {
-          return this.dashboardService.getTankInformation().pipe(
-            catchError((err) => {
-              // Handle errors
-              console.error(err);
-              return of([]);
-            })
-          );
-        }),
-        filter((data) => data !== undefined)
-      )
+    const sub1: any = this.dashboardService
+      .getTankInformation()
       .subscribe((data) => {
         this.tankInfo = data;
         this.dataSource.data = data;

@@ -38,24 +38,49 @@
 <br />
 <div
   fxLayout="row"
-  *ngFor="let item of noOfRows; let i = index"
-  fxLayoutAlign="space-between center"
+  fxLayoutAlign="space-evenly start"
   fxLayoutGap="20px"
   class="my-alternate-theme"
 >
   <br />
-  <div fxFlex="50" *ngFor="let item of defaultNumberG; let j = index">
+  <div fxFlex="30">
+    <app-widget-cylinder
+      [litres]="tankInfo[0] && tankInfo[0].liters ? tankInfo[0].liters : '0'"
+      [caption]="
+        tankInfo[0] && tankInfo[0].productName ? tankInfo[0].productName : ''
+      "
+      class="my-alternate-theme widget-Class"
+    ></app-widget-cylinder>
+  </div>
+  <div fxFlex="30">
+    <app-widget-cylinder
+      [litres]="tankInfo[1] && tankInfo[1].liters ? tankInfo[1].liters : '0'"
+      [caption]="
+        tankInfo[1] && tankInfo[1].productName ? tankInfo[1].productName : ''
+      "
+      class="my-alternate-theme widget-Class"
+    ></app-widget-cylinder>
+  </div>
+  <div fxFlex="30">
+    <app-widget-cylinder
+      [litres]="tankInfo[2] && tankInfo[2].liters ? tankInfo[2].liters : '0'"
+      [caption]="
+        tankInfo[2] && tankInfo[2].productName ? tankInfo[2].productName : ''
+      "
+      class="my-alternate-theme widget-Class"
+    ></app-widget-cylinder>
+  </div>
+
+  <!-- <div fxFlex="50" *ngFor="let item of defaultNumberG; let j = index">
     <br />
     <div *ngIf="tankInfo.length !== i * 2 + j">
-      <!-- <app-guage [data]="tankInfo[i * 2 + j]"></app-guage> -->
-      <app-widget-tank
-        [uppeLimit]="upperLimitArray[i * 2 + j]"
+      <app-widget-cylinder
         [litres]="tankInfo[i * 2 + j].liters"
         [caption]="tankInfo[i * 2 + j].productName"
         class="my-alternate-theme widget-Class"
-      ></app-widget-tank>
+      ></app-widget-cylinder>
     </div>
-  </div>
+  </div> -->
 
   <!-- <div fxFlex="50">
     <app-guage></app-guage>

@@ -30,6 +30,7 @@ import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import * as Ocean from 'fusioncharts/themes/fusioncharts.theme.ocean';
 import * as Carbon from 'fusioncharts/themes/fusioncharts.theme.carbon';
 import { GuageComponent } from './widgets/guage/guage.component';
+import { CylinderComponent } from './widgets/cylinder/cylinder.component';
 
 // require('highcharts/themes/dark-blue')(HighchartsChartModule);
 
@@ -51,6 +52,7 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     DrillDownComponent,
     TankComponent,
     GuageComponent,
+    CylinderComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     DrillDownComponent,
     TankComponent,
     GuageComponent,
+    CylinderComponent,
   ],
 })
 export class SharedModule {}
