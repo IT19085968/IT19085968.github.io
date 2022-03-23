@@ -155,7 +155,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.columnChartInfo = fullColumnInfo;
         this.categories = categories;
-        // this.colours = colours;
 
         this.pieChartInfo = pieChartInfo;
       });
