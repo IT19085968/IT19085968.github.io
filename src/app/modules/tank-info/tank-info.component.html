@@ -36,23 +36,20 @@
 <mat-divider></mat-divider>
 
 <br />
-<div
+<!-- <div
   fxLayout="row"
   fxLayoutAlign="space-evenly start"
   fxLayoutGap="20px"
   class="my-alternate-theme"
->
-  <br />
-  <div fxFlex="30">
-    <app-widget-cylinder
-      [litres]="tankInfo[0] && tankInfo[0].liters ? tankInfo[0].liters : '0'"
-      [caption]="
-        tankInfo[0] && tankInfo[0].productName ? tankInfo[0].productName : ''
-      "
-      class="my-alternate-theme widget-Class"
-    ></app-widget-cylinder>
-  </div>
-  <div fxFlex="30">
+> -->
+<br />
+<!-- <div> -->
+<app-widget-cylinder
+  [tankInfo]="tankInfo"
+  class="my-alternate-theme widget-Class"
+></app-widget-cylinder>
+<!-- </div> -->
+<!-- <div fxFlex="30">
     <app-widget-cylinder
       [litres]="tankInfo[1] && tankInfo[1].liters ? tankInfo[1].liters : '0'"
       [caption]="
@@ -69,9 +66,9 @@
       "
       class="my-alternate-theme widget-Class"
     ></app-widget-cylinder>
-  </div>
+  </div> -->
 
-  <!-- <div fxFlex="50" *ngFor="let item of defaultNumberG; let j = index">
+<!-- <div fxFlex="50" *ngFor="let item of defaultNumberG; let j = index">
     <br />
     <div *ngIf="tankInfo.length !== i * 2 + j">
       <app-widget-cylinder
@@ -82,10 +79,10 @@
     </div>
   </div> -->
 
-  <!-- <div fxFlex="50">
+<!-- <div fxFlex="50">
     <app-guage></app-guage>
   </div> -->
-</div>
+<!-- </div> -->
 <br />
 
 <mat-divider></mat-divider>
