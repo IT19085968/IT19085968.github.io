@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 import { User } from '../shared/models/User';
 
 export const AUTH_TOKEN_KEY = 'auth-token';
