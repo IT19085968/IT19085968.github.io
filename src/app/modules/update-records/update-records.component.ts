@@ -99,10 +99,12 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
   }
 
   getPriceSignInfo(): void {
-    this.terminalsService.getPriceSign().subscribe((data) => {
+    const sub2: any = this.terminalsService.getPriceSign().subscribe((data) => {
       this.dataSource.data = data;
       this.changeDetectorRefs.detectChanges();
     });
+
+    this.subscriptions.push(sub2);
   }
 
   updatePrice(): void {
@@ -192,7 +194,6 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
     });
   }
 

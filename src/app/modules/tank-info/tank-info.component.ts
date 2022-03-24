@@ -106,9 +106,6 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
           for (let i = 0; i < this.rows; i++) {
             this.noOfRows.push('a');
           }
-          console.log('tankInfo: ', this.tankInfo);
-          console.log('justDivi: ', totalElements);
-          console.log('roundOff: ', this.noOfRows);
         }
       })
     );
@@ -124,7 +121,6 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
     });
   }
 

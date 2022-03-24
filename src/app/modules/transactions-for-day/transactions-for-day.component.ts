@@ -46,7 +46,6 @@ export class TransactionsForDayComponent implements OnInit, AfterViewInit {
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
     });
   }
 

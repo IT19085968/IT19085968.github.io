@@ -11,16 +11,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { AreaComponent } from './widgets/area/area.component';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { CardComponent } from './widgets/card/card.component';
 import { PieComponent } from './widgets/pie/pie.component';
 import { ColumnComponent } from './widgets/column/column.component';
-import { BarComponent } from './widgets/bar/bar.component';
 import { LineComponent } from './widgets/line/line.component';
-import { DrillDownComponent } from './widgets/drill-down/drill-down.component';
 import { FusionChartsModule } from 'angular-fusioncharts';
-import { TankComponent } from './widgets/tank/tank.component';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 // import * as Charts from 'fusioncharts/fusioncharts.powercharts';
@@ -29,7 +24,6 @@ import * as widgets from 'fusioncharts/fusioncharts.widgets';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import * as Ocean from 'fusioncharts/themes/fusioncharts.theme.ocean';
 import * as Carbon from 'fusioncharts/themes/fusioncharts.theme.carbon';
-import { GuageComponent } from './widgets/guage/guage.component';
 import { CylinderComponent } from './widgets/cylinder/cylinder.component';
 
 // require('highcharts/themes/dark-blue')(HighchartsChartModule);
@@ -43,15 +37,9 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    AreaComponent,
-    CardComponent,
     PieComponent,
     ColumnComponent,
-    BarComponent,
     LineComponent,
-    DrillDownComponent,
-    TankComponent,
-    GuageComponent,
     CylinderComponent,
   ],
   imports: [
@@ -71,15 +59,9 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    AreaComponent,
-    CardComponent,
     PieComponent,
     ColumnComponent,
-    BarComponent,
     LineComponent,
-    DrillDownComponent,
-    TankComponent,
-    GuageComponent,
     CylinderComponent,
   ],
 })

@@ -143,9 +143,13 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-    });
+    const sub3: any = this.dashboardService
+      .getThumbNails()
+      .subscribe((data) => {
+        this.thumbNails = data;
+      });
+
+    this.subscriptions.push(sub3);
   }
 
   ngOnDestroy(): void {
