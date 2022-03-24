@@ -63,7 +63,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
       .getFuelGradeInformation()
       .subscribe((data) => {
         this.fuelGrades = data;
-        console.log('fuel: ', this.fuelGrades);
       });
 
     this.subscriptions.push(sub1);
@@ -72,7 +71,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
       .getPumpsInformation()
       .subscribe((data) => {
         this.pumps = data;
-        console.log('pumps: ', this.pumps);
       });
 
     this.subscriptions.push(sub2);
@@ -81,7 +79,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
       .getTerminalsInformation()
       .subscribe((data) => {
         this.terminals = data;
-        console.log('terminals: ', this.terminals);
       });
 
     this.subscriptions.push(sub3);
@@ -127,7 +124,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
     const subscription: any = this.transactionService
       .postTRSearchQuery(filter)
       .subscribe((data) => {
-        console.log('Transactions: ', data);
         this.dataSource.data = data;
       });
 
@@ -137,7 +133,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openReceipt(receipt: any): void {
-    console.log('receipt:', receipt);
     this.TRreceipt.setValue(receipt);
   }
 
@@ -150,7 +145,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
     });
   }
 

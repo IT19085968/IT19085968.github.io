@@ -118,16 +118,13 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
     priceSign.productID = this.updateRecordsFormGroup.controls.productID.value
       ? this.updateRecordsFormGroup.controls.productID.value
       : '';
-    // priceSign.productName = this.updateRecordsFormGroup.controls.productName
-    //   .value
-    //   ? this.updateRecordsFormGroup.controls.productName.value
-    //   : '';
+
     priceSign.productPrice = this.updateRecordsFormGroup.controls.productPrice
       .value
       ? this.updateRecordsFormGroup.controls.productPrice.value
       : '';
     priceSign.updatedBy = this.user.id;
-    // priceSign.updatedAt = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
+
     const isIndividual: boolean =
       this.updateRecordsFormGroup.controls.indPrice.value;
 
@@ -141,7 +138,6 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
 
     if (priceSign.panalID && priceSign.productPrice) {
       if (isIndividual) {
-        // productsArray.push(priceSign);
         const sub2: any = this.terminalsService
           .postPriceSign([priceSign])
           .subscribe((data) => {
@@ -210,10 +206,6 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
         ? +this.rowData.productPrice
         : this.updateRecordsFormGroup.controls.productPrice.value;
       let total: number = 0;
-      // if (priceChange > 0) {
-      //   total = currentPrice + priceChange;
-      // } else {
-      // total = currentPrice - Math.abs(priceChange);
       const newPriceChange: number = Math.abs(priceChange);
 
       let b1: any = currentPrice.toString().split('.');

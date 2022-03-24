@@ -17,6 +17,7 @@ import HC_exporting from 'highcharts/modules/exporting';
 })
 export class PieComponent implements OnInit, OnChanges {
   @Input() data = [];
+  @Input() colours = [];
   @Input() title = '';
   Highcharts = Highcharts;
   testWidth: any = '100%';
@@ -30,6 +31,7 @@ export class PieComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.chartOptions = {
+      // colors: this.colours,
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,

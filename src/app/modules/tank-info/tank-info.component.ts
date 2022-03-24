@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -10,8 +11,14 @@ import { DashboardService } from '../dashboard.service';
 import { TankInfo } from 'src/app/shared/models/TankInfo';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { of, Subscription, timer } from 'rxjs';
-import { catchError, filter, switchMap } from 'rxjs/operators';
+import { of, Subject, Subscription, timer } from 'rxjs';
+import {
+  catchError,
+  filter,
+  multicast,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tank-info',
@@ -28,6 +35,9 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   thumbNails: any = [];
   subscriptions: Subscription[] = [];
+  timerSub: any = [];
+
+  testSubject = new Subject();
 
   displayedColumns: string[] = [
     'tankID',
@@ -44,7 +54,10 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('paginatorTNK')
   paginatorTNK!: MatPaginator;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getTankInfo();
@@ -60,11 +73,25 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
     const litresArray: any[] = [];
     let TotalHeight: number = 0;
 
-    const sub1: any = this.dashboardService
-      .getTankInformation()
-      .subscribe((data) => {
+    let timerTest: any = timer(0, 60000).pipe(
+      takeUntil(this.testSubject),
+      switchMap((x) => {
+        console.log('api call: ', x);
+        return this.dashboardService.getTankInformation().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub.push(
+      timerTest.subscribe((data: any[]) => {
         this.tankInfo = data;
         this.dataSource.data = data;
+        this.changeDetectorRefs.detectChanges();
         this.upperLimitArray = [];
         this.noOfRows = [];
 
@@ -83,9 +110,10 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('justDivi: ', totalElements);
           console.log('roundOff: ', this.noOfRows);
         }
-      });
+      })
+    );
 
-    this.subscriptions.push(sub1);
+    timerTest.connect();
   }
 
   valueChange(e: any): void {
@@ -101,6 +129,10 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.testSubject.next();
+    this.timerSub.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
     this.subscriptions.forEach((sub: Subscription) => {
       sub.unsubscribe();
     });

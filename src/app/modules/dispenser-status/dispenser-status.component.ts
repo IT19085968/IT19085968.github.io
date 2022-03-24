@@ -108,10 +108,9 @@ export class DispenserStatusComponent
   }
 
   getDispenserInfo(): void {
-    let timerTest: any = timer(0, 15000).pipe(
+    let timerTest: any = timer(0, 1000).pipe(
       takeUntil(this.testSubject),
       switchMap((x) => {
-        console.log('api call: ', x);
         return this.dashboardService.getDispenserInformation().pipe(
           catchError((err) => {
             // Handle errors
@@ -126,7 +125,6 @@ export class DispenserStatusComponent
       timerTest.subscribe((data: any[]) => {
         this.dataSourceDispenser.data = data;
         this.changeDetectorRefs.detectChanges();
-        console.log('timerTest: ', timerTest);
       })
     );
 
@@ -138,7 +136,6 @@ export class DispenserStatusComponent
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
     });
   }
 
@@ -170,7 +167,6 @@ export class DispenserStatusComponent
     const subscription: any = this.transactionService
       .getDeliveryTotals(filter.FromDate, filter.ToDate)
       .subscribe((data) => {
-        console.log('deliveries: ', data);
         this.dataSourceDeliveryTotals.data = data;
       });
 
@@ -187,7 +183,6 @@ export class DispenserStatusComponent
     const subscription: any = this.transactionService
       .getElectronicTotals(filter.AsAtDate)
       .subscribe((data) => {
-        console.log('electronic: ', data);
         this.dataSourceElectronicTotals.data = data;
       });
 

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DefaultComponent } from './layouts/default/default.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { PostsComponent } from './modules/posts/posts.component';
 import { TransactionsComponent } from './modules/transactions/transactions.component';
 import { DispenserStatusComponent } from './modules/dispenser-status/dispenser-status.component';
 import { CreateUserComponent } from './modules/create-user/create-user.component';
@@ -26,11 +25,6 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'posts',
-        component: PostsComponent,
         canActivate: [AuthGuardService],
       },
       {

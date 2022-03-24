@@ -35,7 +35,11 @@
 
 <div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="10px">
   <div fxFlex="40">
-    <app-widget-pie [data]="pieChartInfo" [title]="title3"></app-widget-pie>
+    <app-widget-pie
+      [data]="pieChartInfo"
+      [title]="title3"
+      [colours]="pieColours"
+    ></app-widget-pie>
   </div>
   <div fxFlex="30">
     <app-widget-column

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   categories: any = [];
   catTerminals: any = [];
   colours: any = [];
+  pieColours: any = [];
   thumbNails: any = [];
 
   barInfo: any = [];
@@ -84,6 +85,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getCurrentHourlySales();
     this.getAvgCurrentHourlySales();
     this.getProductSales();
+    this.getProportions();
     this.getTerminalSales();
     this.getThumbNails();
   }
@@ -133,7 +135,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getProductSales(): void {
-    const pieChartInfo: any[] = [];
+    // const pieChartInfo: any[] = [];
     const columnInfo: any[] = [];
     const fullColumnInfo: any[] = [];
     const categories: any[] = [];
@@ -142,7 +144,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       .getProductSales()
       .subscribe((data) => {
         data.forEach((e: any) => {
-          pieChartInfo.push({ name: e.productName, y: +e.totalAmount });
+          // pieChartInfo.push({ name: e.productName, y: +e.totalAmount });
           categories.push(e.productName);
           columnInfo.push(+e.totalAmount);
           // colours.push('#' + e.backColour);
@@ -156,7 +158,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.columnChartInfo = fullColumnInfo;
         this.categories = categories;
 
+        // this.pieChartInfo = pieChartInfo;
+      });
+    this.subscriptions.push(sub3);
+  }
+
+  getProportions(): void {
+    const pieChartInfo: any[] = [];
+    const colors: any = [];
+    const sub3: any = this.dashboardService
+      .getGradeProportion()
+      .subscribe((data) => {
+        data.forEach((e: any) => {
+          colors.push(e.backColour);
+          pieChartInfo.push({ name: e.gradeName, y: +e.propotion });
+        });
+
         this.pieChartInfo = pieChartInfo;
+        this.pieColours = colors;
       });
     this.subscriptions.push(sub3);
   }
