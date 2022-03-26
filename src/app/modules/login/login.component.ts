@@ -9,6 +9,7 @@ import { Subscription, Observable, BehaviorSubject, interval } from 'rxjs';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/modules/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -62,6 +63,28 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  openSweetAlertSuccess(): void {
+    // Swal.fire({
+    //     text: 'Login Successful!',
+    //     icon: 'success'
+    //   });
+    // Swal.fire({
+    //   title: 'Loading data.. Please wait',
+    // });
+    Swal.fire('Loading data...', 'Please wait');
+    Swal.showLoading();
+  }
+
+  openSweetAlertFail(): void {
+    Swal.fire({
+      title: 'Login Unsuccessful!',
+      text: 'Incorrect username or password',
+      customClass: 'swal-height',
+      icon: 'error',
+    });
+    // Swal.fire('Login Unsuccessful!', 'Incorrect username or password', 'error');
+  }
+
   loginUser(): void {
     let user: User = {
       id: '',
@@ -88,8 +111,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       const sub2: any = this.authService
         .fetchUserById(user.id)
         .subscribe((data) => {
-          console.log('return to ' + this.retUrl);
-          if (data.length > 0) {
+          // console.log('return to ' + this.retUrl);
+          let pwd: any = this.userFormGroup.controls.password.value
+            ? this.userFormGroup.controls.password.value
+            : null;
+          if (data.length > 0 && pwd && pwd === data[0].password) {
+            console.log('success');
+            this.openSweetAlertSuccess();
             this.retUrl = 'default';
             this.user = data[0];
             this.authService.setSessionStorage(this.user);
@@ -101,8 +129,11 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.router.navigate(['']);
             }
             // this.goToDashboard();
+          } else {
+            console.log('fail');
+            this.openSweetAlertFail();
           }
-          console.log('user: ', data);
+          // console.log('user: ', data);
         });
       // this.authService.fetchUserById(user.id);
 

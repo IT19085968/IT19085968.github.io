@@ -13,7 +13,7 @@ import { DashboardService } from '../dashboard.service';
 import { TankInfo } from 'src/app/shared/models/TankInfo';
 import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
 import { Subscription } from 'rxjs';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -215,6 +215,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         this.colours = colours;
+        Swal.close();
       });
 
     this.subscriptions.push(sub5);
