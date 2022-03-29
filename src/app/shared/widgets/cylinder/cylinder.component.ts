@@ -24,6 +24,7 @@ export class CylinderComponent implements OnInit, AfterViewInit, OnChanges {
   // @Input() litres = '';
   // @Input() caption = '';
   @Input() tankInfo = [];
+  @Input() lastUpdatedDate = '';
   // Create chart instance
   chart: any;
   litresM: any = '';

@@ -51,8 +51,6 @@ export class DispenserStatusComponent
     'deliveryID',
     'productID',
     'productName',
-    'updatedBy',
-    'updatedAt',
     'volume',
     'price',
     'amount',

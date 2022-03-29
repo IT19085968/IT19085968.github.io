@@ -5,6 +5,10 @@ img {
   border-radius: 50%;
 }
 
+.clearbtn {
+  margin-top: 10px;
+}
+
 // #inner {
 //   border: 1px solid black;
 // }
@@ -34,3 +38,13 @@ mat-card {
 // .swal-height {
 //   height: 40vh;
 // }
+
+footer {
+  padding: 20px;
+}
+
+.footerClass{
+  bottom: 0;
+  position: fixed;
+}
+

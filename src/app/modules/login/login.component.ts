@@ -64,14 +64,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   openSweetAlertSuccess(): void {
-    // Swal.fire({
-    //     text: 'Login Successful!',
-    //     icon: 'success'
-    //   });
-    // Swal.fire({
-    //   title: 'Loading data.. Please wait',
-    // });
     Swal.fire('Loading data...', 'Please wait');
+    Swal.showLoading();
+  }
+
+  openSweetAlertAuthentication(): void {
+    Swal.fire('Logging in...', 'please wait.');
     Swal.showLoading();
   }
 
@@ -108,9 +106,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       //   console.log('isSuccess: ', data);
       // });
       // this.subscriptions.push(sub2);
+      this.openSweetAlertAuthentication();
       const sub2: any = this.authService
         .fetchUserById(user.id)
         .subscribe((data) => {
+          Swal.close();
           // console.log('return to ' + this.retUrl);
           let pwd: any = this.userFormGroup.controls.password.value
             ? this.userFormGroup.controls.password.value
@@ -147,6 +147,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   getUserData(): any {
     return this.authService.userData?.userName;
+  }
+
+  clearFields(): void {
+    this.userFormGroup.reset();
   }
 
   ngOnDestroy(): void {

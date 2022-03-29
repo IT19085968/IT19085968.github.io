@@ -123,8 +123,17 @@ export class DashboardService {
   column() {
     return [
       {
-        name: 'Tokyo',
-        y: 49.9,
+        name: 'Terminals',
+        data:[30.58]
+      },
+    ];
+  }
+
+  column2() {
+    return [
+      {
+        name: 'Grades',
+        data:[15.58,0.00,15.00]
       },
     ];
   }

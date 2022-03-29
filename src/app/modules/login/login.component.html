@@ -1,11 +1,10 @@
-<!-- <span *ngIf="isUserLoggedIn"> You are logged In as {{ loggedUserName }} </span> -->
-<div class="outer">
+<div class="outer container-fluid">
   <form [formGroup]="userFormGroup" *ngIf="!isUserLoggedIn" id="inner">
     <mat-card
       fxLayout="row"
       fxLayoutAlign="space-around center"
       fxLayoutGap="5px"
-      fxFlex="35"
+      fxFlex="40"
     >
       <!-- <div fxFlex="13">
         <img
@@ -13,8 +12,8 @@
           alt="Soufiane FADIL"
         />
       </div> -->
-      <div fxFlex="23">
-        <div class="form-group col-md-2">
+      <div fxFlex="30">
+        <div class="form-group">
           <mat-form-field class="mat-form-field-fluid" appearance="outline">
             <mat-label>User Name</mat-label>
             <input
@@ -29,7 +28,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group">
           <mat-form-field class="mat-form-field-fluid" appearance="outline">
             <mat-label>Password</mat-label>
             <input
@@ -49,17 +48,30 @@
           </mat-form-field>
         </div>
       </div>
-      <div fxFlex="12">
+      <div fxFlex="10">
         <button
           mat-raised-button
           matTooltip="login"
           class="m-1 w-100"
-          (click)="loginUser();"
+          (click)="loginUser()"
           color="primary"
         >
           Login
         </button>
+        <button
+          mat-raised-button
+          matTooltip="login"
+          class="m-1 w-100 clearbtn"
+          (click)="clearFields()"
+          color="btn-warning"
+        >
+          Clear
+        </button>
       </div>
     </mat-card>
   </form>
+</div>
+
+<div class="container footerClass">
+  <footer>&copy; Flex Fuel Site Management System</footer>
 </div>

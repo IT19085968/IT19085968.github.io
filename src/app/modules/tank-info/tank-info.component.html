@@ -46,8 +46,10 @@
 <!-- <div> -->
 <app-widget-cylinder
   [tankInfo]="tankInfo"
+  [lastUpdatedDate]="lastUpdatedDate"
   class="my-alternate-theme widget-Class"
 ></app-widget-cylinder>
+
 <!-- </div> -->
 <!-- <div fxFlex="30">
     <app-widget-cylinder
@@ -131,6 +133,12 @@
         <ng-container matColumnDef="ullage">
           <th mat-header-cell *matHeaderCellDef>Ullage</th>
           <td mat-cell *matCellDef="let element">{{ element.ullage }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="lastUpdated">
+          <th mat-header-cell *matHeaderCellDef>Last Updated On</th>
+          <td mat-cell *matCellDef="let element">{{ lastUpdatedDate }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

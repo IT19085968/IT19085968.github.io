@@ -19,6 +19,7 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tank-info',
@@ -47,7 +48,10 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
     'waterLevel',
     'temperature',
     'ullage',
+    'lastUpdated'
   ];
+
+  lastUpdatedDate:any = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
   dataSource = new MatTableDataSource<TankInfo>();
 
@@ -94,6 +98,7 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetectorRefs.detectChanges();
         this.upperLimitArray = [];
         this.noOfRows = [];
+        this.lastUpdatedDate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
         this.tankInfo.forEach((e: any, index: number) => {
           TotalHeight = Math.floor(+e.liters + +e.height);

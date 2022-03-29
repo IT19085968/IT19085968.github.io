@@ -72,10 +72,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    this.categories = ['Seattle HQ', 'San Francisco', 'Tokyo'];
-    this.catTerminals = ['Seattle HQ', 'San Francisco', 'Tokyo'];
+    this.categories = ['Unleaded 91', 'Unleaded 95', 'Diesel'];
+    this.catTerminals = ['5'];
 
-    this.columnChartInfo = this.dashboardService.column();
+    this.columnChartInfo = this.dashboardService.column2();
     this.columnTerminals = this.dashboardService.column();
     this.barInfo = this.dashboardService.bar();
     this.lineChartInfo = this.dashboardService.line();
