@@ -8,7 +8,6 @@ import { CreateUserComponent } from './modules/create-user/create-user.component
 import { LoginComponent } from './modules/login/login.component';
 import { TankInfoComponent } from './modules/tank-info/tank-info.component';
 import { AuthGuardService } from './modules/auth-guard.service';
-import { TransactionsForDayComponent } from './modules/transactions-for-day/transactions-for-day.component';
 import { UpdateRecordsComponent } from './modules/update-records/update-records.component';
 import { TerminalsComponent } from './modules/terminals/terminals.component';
 
@@ -45,11 +44,6 @@ const routes: Routes = [
       {
         path: 'tankInformation',
         component: TankInfoComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'transactionsForDay',
-        component: TransactionsForDayComponent,
         canActivate: [AuthGuardService],
       },
       {

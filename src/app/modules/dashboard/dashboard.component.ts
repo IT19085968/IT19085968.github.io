@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   pieColours: any = [];
   thumbNails: any = [];
 
-  barInfo: any = [];
   lineChartInfo: any = [];
   currentSalesInfo: any = [];
   avgSalesInfo: any = [];
@@ -77,7 +76,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.columnChartInfo = this.dashboardService.column2();
     this.columnTerminals = this.dashboardService.column();
-    this.barInfo = this.dashboardService.bar();
     this.lineChartInfo = this.dashboardService.line();
     this.currentSalesInfo = this.lineChartInfo;
     this.avgSalesInfo = this.lineChartInfo;

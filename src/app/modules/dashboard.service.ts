@@ -15,9 +15,7 @@ import { AuthService } from './auth.service';
 export class DashboardService {
   readonly APIUrl = 'http://202.92.217.56:8281/flexapi/Dispenser';
 
-  currentDate: any = moment(new Date('2022-02-10')).format('YYYY-MM-DD')
-    ? moment(new Date('2022-02-10')).format('YYYY-MM-DD')
-    : moment(new Date()).format('YYYY-MM-DD');
+  currentDate: any = moment(new Date()).format('YYYY-MM-DD');
   anyText: string = this.authService.userData?.id
     ? this.authService.userData?.id
     : 'AA';
@@ -86,36 +84,19 @@ export class DashboardService {
     );
   }
 
-  bar() {
-    return [
-      {
-        name: 'John',
-        data: [5, 3, 4],
-      },
-      {
-        name: 'Jane',
-        data: [2, 2, 3],
-      },
-      {
-        name: 'Joe',
-        data: [3, 4, 4],
-      },
-    ];
-  }
-
   line() {
     return [
       {
-        name: 'Installation',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
+        name: 'Unleaded 91',
+        data: [0,0,0,0,0,0,0,0],
       },
       {
-        name: 'Manufacturing',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
+        name: 'Unleaded 95',
+        data: [0,0,0,0,0,0,0,0],
       },
       {
-        name: 'Sales & Distribution',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+        name: 'Diesel',
+        data: [0,0,0,0,0,0,0,0],
       },
     ];
   }

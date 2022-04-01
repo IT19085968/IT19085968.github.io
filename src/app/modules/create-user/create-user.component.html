@@ -1,7 +1,7 @@
 <!-- <mat-card> -->
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <!-- <div> -->
-  <div fxFlex="25" *ngFor="let item of thumbNails">
+  <div fxFlex="24" *ngFor="let item of thumbNails">
     <mat-card
       class="thumbNail-card"
       [ngStyle]="{ 'background-color': item.backColour }"
@@ -25,7 +25,7 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div fxFlex="20"></div>
+  <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
 </div>
 
 <br />

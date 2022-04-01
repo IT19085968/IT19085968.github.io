@@ -39,7 +39,6 @@ import { DispenserStatusComponent } from '../../modules/dispenser-status/dispens
 import { CreateUserComponent } from '../../modules/create-user/create-user.component';
 import { LoginComponent } from 'src/app/modules/login/login.component';
 import { TankInfoComponent } from 'src/app/modules/tank-info/tank-info.component';
-import { TransactionsForDayComponent } from 'src/app/modules/transactions-for-day/transactions-for-day.component';
 import { UpdateRecordsComponent } from 'src/app/modules/update-records/update-records.component';
 import { TerminalsComponent } from 'src/app/modules/terminals/terminals.component';
 @NgModule({
@@ -51,7 +50,6 @@ import { TerminalsComponent } from 'src/app/modules/terminals/terminals.componen
     CreateUserComponent,
     LoginComponent,
     TankInfoComponent,
-    TransactionsForDayComponent,
     UpdateRecordsComponent,
     TerminalsComponent,
   ],
