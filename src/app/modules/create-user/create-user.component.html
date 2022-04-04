@@ -6,17 +6,33 @@
       class="thumbNail-card"
       [ngStyle]="{ 'background-color': item.backColour }"
     >
-      <mat-card-header class="thumbNail-card-header">
-        <mat-card-title>
-          <div class="card-title-text">{{ item.noOfSales }}</div>
-        </mat-card-title>
-        <mat-card-title>
-          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
-        </mat-card-title>
-        <mat-card-title>
-          <div class="card-content-text">{{ item.itemName }}</div>
-        </mat-card-title>
-      </mat-card-header>
+      <div fxLayout="row" class="cardTextClass">
+        <div>
+          <mat-card-title fxLayout="column" class="columnClass">
+            <div class="card-title-1">{{ item.itemName }}</div>
+            <div class="card-title-2">No of Sales</div>
+            <div class="card-title-2">Unit Price</div>
+          </mat-card-title>
+        </div>
+        <div>
+          <mat-card-title
+            fxLayout="column"
+            fxLayoutAlign="space-between end"
+            class="columnClassValue"
+          >
+            <div class="card-title-1-value">
+              {{ item.noOfSales | currency }}
+            </div>
+            <div class="card-title-2-value">
+              {{ item.totalAmount | currency }}
+            </div>
+            <div class="card-title-2-value">
+              {{ item.noOfSales | currency }}
+            </div>
+          </mat-card-title>
+        </div>
+      </div>
+
       <mat-card-content class="card-content-common">
         <div>
           <!-- <i class="fa fa-clock faa-pulse"></i> -->
@@ -43,7 +59,7 @@
   >
     <div fxFlex="12">
       <img
-        src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
+        src="https://icon-library.com/images/unknown-person-icon/unknown-person-icon-4.jpg"
         alt="Soufiane FADIL"
       />
     </div>

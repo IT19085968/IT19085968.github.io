@@ -64,18 +64,90 @@
 <br />
 
 <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-  <div fxFlex="74">
+  <div fxFlex="70">
     <app-widget-line
       [data]="currentSalesInfo"
       [title]="title1"
     ></app-widget-line>
   </div>
+  <div fxFlex="30">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSourcePump">
+        <!-- Position Column -->
+        <ng-container matColumnDef="pumpID">
+          <th mat-header-cell *matHeaderCellDef>PumpID</th>
+          <td mat-cell *matCellDef="let element">{{ element.pumpID }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="lastTransTime">
+          <th mat-header-cell *matHeaderCellDef>Last Transaction Time</th>
+          <td mat-cell *matCellDef="let element">{{ element.lastTransTime }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="idleHours">
+          <th mat-header-cell *matHeaderCellDef>Idle Time(Hrs)</th>
+          <td mat-cell *matCellDef="let element">{{ element.idleHours }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPump"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsPump"></tr>
+      </table>
+
+      <mat-paginator
+        #paginatorPump="matPaginator"
+        [length]="dataSourcePump.data.length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
+  </div>
 </div>
 
 <br />
 <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-  <div fxFlex="74">
+  <div fxFlex="70">
     <app-widget-line [data]="avgSalesInfo" [title]="title2"></app-widget-line>
+  </div>
+  <div fxFlex="30">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSourceTerminal">
+        <!-- Position Column -->
+        <ng-container matColumnDef="terminalID">
+          <th mat-header-cell *matHeaderCellDef>TerminalID</th>
+          <td mat-cell *matCellDef="let element">{{ element.terminalID }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="lastTransTime">
+          <th mat-header-cell *matHeaderCellDef>Last Transaction Time</th>
+          <td mat-cell *matCellDef="let element">{{ element.lastTransTime }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="idleHours">
+          <th mat-header-cell *matHeaderCellDef>Idle Time(Hrs)</th>
+          <td mat-cell *matCellDef="let element">{{ element.idleHours }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTerminal"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTerminal"></tr>
+      </table>
+
+      <mat-paginator
+        #paginatorTerminal="matPaginator"
+        [length]="dataSourceTerminal.data.length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
   </div>
 </div>
 

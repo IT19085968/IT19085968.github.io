@@ -41,31 +41,25 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   title4: string = 'Current Sales by Grade';
   title5: string = 'Current Sales by Terminal';
 
-  displayedColumns: string[] = [
-    'tankID',
-    'name',
-    'height',
-    'liters',
-    'waterLevel',
-    'temperature',
-    'ullage',
+  displayedColumnsPump: string[] = [
+    'pumpID',
+    'lastTransTime',
+    'idleHours',
   ];
 
-  displayedColumnsDispenser: string[] = [
-    'dispenser',
-    'dispenserState',
-    'nozzleState',
-    'amount',
-    'volume',
+  displayedColumnsTerminal: string[] = [
+    'terminalID',
+    'lastTransTime',
+    'idleHours',
   ];
 
-  dataSource = new MatTableDataSource<TankInfo>();
-  dataSourceDispenser = new MatTableDataSource<DispenserInfo>();
+  dataSourcePump = new MatTableDataSource<any>();
+  dataSourceTerminal = new MatTableDataSource<any>();
 
-  @ViewChild('paginatorDPN')
-  paginatorDPN!: MatPaginator;
-  @ViewChild('paginatorTNK')
-  paginatorTNK!: MatPaginator;
+  @ViewChild('paginatorTerminal')
+  paginatorTerminal!: MatPaginator;
+  @ViewChild('paginatorPump')
+  paginatorPump!: MatPaginator;
   subscriptions: Subscription[] = [];
 
   constructor(private dashboardService: DashboardService) {}
@@ -85,12 +79,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getProductSales();
     this.getProportions();
     this.getTerminalSales();
+    this.getIdlePumps();
+    this.getIdleTerminals();
     this.getThumbNails();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginatorTNK;
-    this.dataSourceDispenser.paginator = this.paginatorDPN;
+    this.dataSourcePump.paginator = this.paginatorPump;
+    this.dataSourceTerminal.paginator = this.paginatorTerminal;
   }
 
   getCurrentHourlySales(): void {
@@ -217,6 +213,28 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
     this.subscriptions.push(sub5);
+  }
+
+  getIdlePumps(): void {
+    const sub6: any = this.dashboardService
+      .getPumpIdleStatus()
+      .subscribe((data) => {
+        this.dataSourcePump.data = data;
+        console.log('pumps:', data);
+      });
+
+    this.subscriptions.push(sub6);
+  }
+
+  getIdleTerminals(): void {
+    const sub7: any = this.dashboardService
+      .getTerminalIdleStatus()
+      .subscribe((data) => {
+        this.dataSourceTerminal.data = data;
+        console.log('terminals:', data);
+      });
+
+    this.subscriptions.push(sub7);
   }
 
   ngOnDestroy(): void {

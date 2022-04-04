@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class DashboardService {
-  readonly APIUrl = 'http://202.92.217.56:8281/flexapi/Dispenser';
+  readonly APIUrl = 'http://202.92.217.56:8281/flexapi';
 
   currentDate: any = moment(new Date()).format('YYYY-MM-DD');
   anyText: string = this.authService.userData?.id
@@ -80,6 +80,20 @@ export class DashboardService {
   getGradeProportion(): Observable<any[]> {
     return this.http.get<any>(
       `${environment.apiURL}/Dashboard/GradePropotion/${this.currentDate}`,
+      this.httpOptions
+    );
+  }
+
+  getPumpIdleStatus(): Observable<any[]> {
+    return this.http.get<any>(
+      `${this.APIUrl}/Dashboard/PumpIdleStatus`,
+      this.httpOptions
+    );
+  }
+
+  getTerminalIdleStatus(): Observable<any[]> {
+    return this.http.get<any>(
+      `${this.APIUrl}/Dashboard/TerminalsIdleStatus`,
       this.httpOptions
     );
   }

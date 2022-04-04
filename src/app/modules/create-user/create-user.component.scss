@@ -68,7 +68,7 @@ table {
   float: left;
   margin: 0 -15px;
   color: azure;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: lighter;
 }
 
@@ -101,4 +101,57 @@ table {
   min-width: -webkit-fill-available;
   background-color: white;
   color: black;
+}
+
+.subtitleClass{
+  display: flex;
+  justify-content: right;
+}
+
+.card-title-1 {
+  color: white;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.card-title-1-value{
+  // color: white;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.card-title-2 {
+  color: white;
+    font-weight: lighter;
+    font-size: 14px;
+}
+
+.card-title-2-value {
+  // color: white;
+  font-weight: lighter;
+    // font-weight: lighter;
+    font-size: 14px;
+    // float: right;
+}
+
+// .card-title-3-value {
+//   color: white;
+//   font-weight: lighter;
+//     // font-weight: lighter;
+//     font-size: 15px;
+//     // float: right;
+// }
+
+.cardTextClass{
+  float: right;
+  line-height: 25px;
+  // margin-right: 5%;
+}
+
+.columnClass {
+  margin-right: 5px;
+}
+
+.columnClassValue {
+  color: white;
 }
