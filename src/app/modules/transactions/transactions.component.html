@@ -1,32 +1,48 @@
-<!-- <div class="card card-body mb-3"> -->
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <!-- <div> -->
-  <div fxFlex="24" *ngFor="let item of thumbNails">
-    <mat-card
-      class="thumbNail-card"
-      [ngStyle]="{ 'background-color': item.backColour }"
-    >
-      <mat-card-header class="thumbNail-card-header">
-        <mat-card-title>
-          <div class="card-title-text">{{ item.noOfSales }}</div>
-        </mat-card-title>
-        <mat-card-title>
-          <div class="card-title-text2">{{ item.totalAmount | currency }}</div>
-        </mat-card-title>
-        <mat-card-title>
-          <div class="card-content-text">{{ item.itemName }}</div>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="card-content-common">
-        <div>
-          <!-- <i class="fa fa-clock faa-pulse"></i> -->
-          <span class="material-icons icon-ref">local_gas_station</span>
+<!-- <mat-card> -->
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- <div> -->
+    <div fxFlex="24" *ngFor="let item of thumbNails">
+      <mat-card
+        class="thumbNail-card"
+        [ngStyle]="{ 'background-color': item.backColour}"
+      >
+        <div fxLayout="row" class="cardTextClass">
+          <div>
+            <mat-card-title fxLayout="column" class="columnClass">
+              <div class="card-title-1 card-title1-fontSize">{{ item.itemName }}</div>
+              <div class="card-title-2 card-title2-fontSize">No of Sales</div>
+              <div class="card-title-2 card-title2-fontSize">Unit Price</div>
+            </mat-card-title>
+          </div>
+          <div>
+            <mat-card-title
+              fxLayout="column"
+              fxLayoutAlign="space-between end"
+              class="columnClassValue"
+            >
+              <div class="card-title-1-value card-title1-fontSize">
+                {{ item.noOfSales | currency }}
+              </div>
+              <div class="card-title-2-value card-title2-fontSize">
+                {{ item.totalAmount | currency }}
+              </div>
+              <div class="card-title-2-value card-title2-fontSize">
+                {{ item.productPrice | currency }}
+              </div>
+            </mat-card-title>
+          </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+  
+        <mat-card-content class="card-content-common">
+          <div>
+            <!-- <i class="fa fa-clock faa-pulse"></i> -->
+            <span class="material-icons icon-ref icon-ref-Size">local_gas_station</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
   </div>
-  <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
-</div>
 
 <br />
 

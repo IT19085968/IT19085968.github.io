@@ -30,9 +30,9 @@
   transition: all 0.3s linear;
   position: absolute;
   top: 25px;
-  left: 25px;
+  // left: 25px;
   z-index: 0;
-  font-size: 80px;
+  // font-size: 80px;
   color: rgba(255, 255, 255, 0.35);
   border-radius: 50%;
   border: 3px solid;
@@ -183,4 +183,60 @@ table {
     padding-left: 10px;
     padding-right: 10px;
   }
+}
+
+.cardTextClass{
+  float: right;
+  line-height: 22px;
+  font-family: sans-serif;
+  // margin-right: 5%;
+}
+
+.columnClass {
+  margin-right: 8px;
+}
+
+.columnClassValue {
+  color: white;
+}
+
+.card-title-1 {
+  color: white;
+    font-weight: lighter;
+    
+    margin-bottom: 8px;
+}
+
+.card-title-1-value{
+  // color: white;
+    font-weight: lighter;
+    
+    margin-bottom: 8px;
+}
+
+.card-title1-fontSize {
+  font-size: 20px;
+}
+
+.card-title-2 {
+  color: white;
+    font-weight: lighter;
+    
+}
+
+.card-title-2-value {
+  // color: white;
+  font-weight: lighter;
+    // font-weight: lighter;
+    
+    // float: right;
+}
+
+.card-title2-fontSize {
+  font-size: 14px;
+}
+
+.icon-ref-Size {
+  left: 25px;
+  font-size: 80px;
 }
