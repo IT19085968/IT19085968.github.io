@@ -20,7 +20,7 @@
             class="columnClassValue"
           >
             <div class="card-title-1-value card-title1-fontSize">
-              {{ item.noOfSales | currency }}
+              {{ item.noOfSales | number: '1.0-0' }}
             </div>
             <div class="card-title-2-value card-title2-fontSize">
               {{ item.totalAmount | currency }}

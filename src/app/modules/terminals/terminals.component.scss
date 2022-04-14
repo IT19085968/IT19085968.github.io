@@ -1,21 +1,4 @@
-.example-card2 div {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0%;
-}
 
-.example-card2 div h3 {
-  margin: auto;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.example-card2 div h5 {
-  margin-left: 5%;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 .thumbNail-card {
   background: #3598dc;
@@ -43,30 +26,6 @@
   margin-bottom: 1px !important;
 }
 
-.card-title-text {
-  float: left;
-  margin: 0 -15px;
-  color: azure;
-  font-size: 28px;
-  font-weight: lighter;
-}
-
-.card-title-text2 {
-  color: azure;
-  margin-top: 40px;
-  margin-right: -100px;
-  font-weight: lighter;
-}
-
-.card-content-text {
-  color: azure;
-  font-size: 17px;
-  // margin-right: 50px;
-  // float: right;
-  // font-weight: 500;
-  margin-top: 70px;
-}
-
 .mat-card-title {
   float: right;
 }
@@ -87,38 +46,6 @@ table {
   display: inline-block;
   margin: 10%;
 }
-
-// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
-//   background-color: #4eb53f !important;
-// }
-
-// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
-//   background-color: green;
-// }
-
-// .green-progress .mat-progress-bar-fill::after {
-//   background-color: green !important;
-// }
-
-// div.mat-progress-bar-buffer.mat-progress-bar-element::after.mat-progress-bar-fill::after {
-//   background-color: #3fb55d;
-// }
-
-// .mat-progress-bar {
-//   height: 14px;
-//   background-color: #ededed;
-//   border-radius: 40px;
-// }
-
-// .mat-progress-bar.mat-progress-bar-buffer {
-//   background: #62b414;
-// }
-
-// div.mat-progress-bar-primary.mat-progress-bar-fill.mat-progress-bar-element::after {
-
-//   border-radius: 40px;
-//   transition-delay: 50s;
-// }
 
 .audio-progress-bar {
   &.mat-progress-bar {
