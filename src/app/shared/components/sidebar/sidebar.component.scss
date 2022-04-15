@@ -16,8 +16,17 @@
   }
 }
 
-mat-icon,span {
+mat-icon,
+span {
   color: white;
 }
 
-.linkClass:hover { color: #00FF00; } 
+a.mat-list-item:hover {
+  // background-color: #2a2a4d;
+  background-color: #2e2e53;
+}
+
+a.mat-list-item:focus {
+  // background-color: #3f3f69;
+  background-color: #2e2e53;
+}

@@ -11,7 +11,7 @@
             <mat-card-title fxLayout="column" class="columnClass">
               <div class="card-title-1 card-title1-fontSize">{{ item.itemName }}</div>
               <div class="card-title-2 card-title2-fontSize">No of Sales</div>
-              <div class="card-title-2 card-title2-fontSize">Unit Price</div>
+              <div class="card-title-2 card-title2-fontSize">Total Orders</div>
             </mat-card-title>
           </div>
           <div>
@@ -21,13 +21,13 @@
               class="columnClassValue"
             >
               <div class="card-title-1-value card-title1-fontSize">
+                {{ item.productPrice | currency }}
+              </div>
+              <div class="card-title-2-value card-title2-fontSize">
                 {{ item.noOfSales | number: '1.0-0' }}
               </div>
               <div class="card-title-2-value card-title2-fontSize">
                 {{ item.totalAmount | currency }}
-              </div>
-              <div class="card-title-2-value card-title2-fontSize">
-                {{ item.productPrice | currency }}
               </div>
             </mat-card-title>
           </div>
