@@ -12,7 +12,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { TankInfo } from 'src/app/shared/models/TankInfo';
 import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
-import { Subscription } from 'rxjs';
+import { of, Subject, Subscription, timer } from 'rxjs';
+import {
+  catchError,
+  filter,
+  multicast,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dashboard',
@@ -61,6 +68,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('paginatorPump')
   paginatorPump!: MatPaginator;
   subscriptions: Subscription[] = [];
+  timerSub1: any = [];
+  timerSub2: any = [];
+  timerSub3: any = [];
+  timerSub4: any = [];
+  timerSub5: any = [];
+  timerSub6: any = [];
+  timerSub7: any = [];
+
+  testSubject1 = new Subject();
+  testSubject2 = new Subject();
+  testSubject3 = new Subject();
+  testSubject4 = new Subject();
+  testSubject5 = new Subject();
+  testSubject6 = new Subject();
+  testSubject7 = new Subject();
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -90,11 +112,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getCurrentHourlySales(): void {
-    const lineChartInfo: any[] = [];
+    let lineChartInfo: any[] = [];
     let salesArray: any[] = [];
-    const sub1: any = this.dashboardService
-      .getHourlySalesCurrent()
-      .subscribe((data) => {
+
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject1),
+      switchMap((x) => {
+        return this.dashboardService.getHourlySalesCurrent().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub1.push(
+      timerTest.subscribe((data: any[]) => {
+        lineChartInfo = [];
+        salesArray = [];
         data.forEach((e: any) => {
           salesArray = [];
           e.Sales.forEach((e: any) => {
@@ -104,17 +141,33 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         this.currentSalesInfo = lineChartInfo;
-      });
+      })
+    );
 
-    this.subscriptions.push(sub1);
+    timerTest.connect();
   }
 
   getAvgCurrentHourlySales(): void {
-    const lineChartInfo: any[] = [];
+    let lineChartInfo: any[] = [];
     let salesArray: any[] = [];
-    const sub2: any = this.dashboardService
-      .getAvgHourlySalesCurrent()
-      .subscribe((data) => {
+
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject2),
+      switchMap((x) => {
+        return this.dashboardService.getAvgHourlySalesCurrent().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub2.push(
+      timerTest.subscribe((data: any[]) => {
+        lineChartInfo = [];
+        salesArray = [];
         data.forEach((e: any) => {
           salesArray = [];
           e.Sales.forEach((e: any) => {
@@ -124,24 +177,39 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         this.avgSalesInfo = lineChartInfo;
-      });
-    this.subscriptions.push(sub2);
+      })
+    );
+
+    timerTest.connect();
   }
 
   getProductSales(): void {
-    // const pieChartInfo: any[] = [];
-    const columnInfo: any[] = [];
-    const fullColumnInfo: any[] = [];
-    const categories: any[] = [];
-    // const colours: any[] = [];
-    const sub3: any = this.dashboardService
-      .getProductSales()
-      .subscribe((data) => {
+    let columnInfo: any[] = [];
+    let fullColumnInfo: any[] = [];
+    let categories: any[] = [];
+
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject3),
+      switchMap((x) => {
+        return this.dashboardService.getProductSales().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub3.push(
+      timerTest.subscribe((data: any[]) => {
+        columnInfo = [];
+        fullColumnInfo = [];
+        categories = [];
+        
         data.forEach((e: any) => {
-          // pieChartInfo.push({ name: e.productName, y: +e.totalAmount });
           categories.push(e.productName);
           columnInfo.push(+e.totalAmount);
-          // colours.push('#' + e.backColour);
         });
 
         fullColumnInfo.push({
@@ -151,18 +219,33 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.columnChartInfo = fullColumnInfo;
         this.categories = categories;
+      })
+    );
 
-        // this.pieChartInfo = pieChartInfo;
-      });
-    this.subscriptions.push(sub3);
+    timerTest.connect();
   }
 
   getProportions(): void {
-    const pieChartInfo: any[] = [];
-    const colors: any = [];
-    const sub3: any = this.dashboardService
-      .getGradeProportion()
-      .subscribe((data) => {
+    let pieChartInfo: any[] = [];
+    let colors: any = [];
+
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject4),
+      switchMap((x) => {
+        return this.dashboardService.getGradeProportion().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub4.push(
+      timerTest.subscribe((data: any[]) => {
+        pieChartInfo = [];
+        colors = [];
         data.forEach((e: any) => {
           colors.push(e.backColour);
           pieChartInfo.push({ name: e.gradeName, y: +e.propotion });
@@ -170,18 +253,35 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.pieChartInfo = pieChartInfo;
         this.pieColours = colors;
-      });
-    this.subscriptions.push(sub3);
+      })
+    );
+
+    timerTest.connect();
   }
 
   getTerminalSales(): void {
-    const columnInfo: any[] = [];
-    const fullColumnInfo: any[] = [];
-    const categories: any[] = [];
+    let columnInfo: any[] = [];
+    let fullColumnInfo: any[] = [];
+    let categories: any[] = [];
 
-    const sub4: any = this.dashboardService
-      .getTerminalSales()
-      .subscribe((data) => {
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject5),
+      switchMap((x) => {
+        return this.dashboardService.getTerminalSales().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub5.push(
+      timerTest.subscribe((data: any[]) => {
+        columnInfo = [];
+        fullColumnInfo = [];
+        categories = [];
         data.forEach((e: any) => {
           categories.push(e.terminalId);
           columnInfo.push(+e.terminalName);
@@ -194,8 +294,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.columnTerminals = fullColumnInfo;
         this.catTerminals = categories;
-      });
-    this.subscriptions.push(sub4);
+      })
+    );
+
+    timerTest.connect();
   }
 
   getThumbNails(): void {
@@ -216,28 +318,83 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getIdlePumps(): void {
-    const sub6: any = this.dashboardService
-      .getPumpIdleStatus()
-      .subscribe((data) => {
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject7),
+      switchMap((x) => {
+        return this.dashboardService.getTerminalSales().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub7.push(
+      timerTest.subscribe((data: any[]) => {
+        
         this.dataSourcePump.data = data;
         console.log('pumps:', data);
-      });
+      })
+    );
 
-    this.subscriptions.push(sub6);
+    timerTest.connect();
   }
 
   getIdleTerminals(): void {
-    const sub7: any = this.dashboardService
-      .getTerminalIdleStatus()
-      .subscribe((data) => {
+    let timerTest: any = timer(0, 90000).pipe(
+      takeUntil(this.testSubject6),
+      switchMap((x) => {
+        return this.dashboardService.getTerminalIdleStatus().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub6.push(
+      timerTest.subscribe((data: any[]) => {
         this.dataSourceTerminal.data = data;
         console.log('terminals:', data);
-      });
+      })
+    );
 
-    this.subscriptions.push(sub7);
+    timerTest.connect();
   }
 
   ngOnDestroy(): void {
+    this.testSubject1.next();
+    this.timerSub1.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject2.next();
+    this.timerSub2.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject3.next();
+    this.timerSub3.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject4.next();
+    this.timerSub4.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject5.next();
+    this.timerSub5.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject6.next();
+    this.timerSub6.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.testSubject7.next();
+    this.timerSub7.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
     this.subscriptions.forEach((sub: Subscription) => {
       sub.unsubscribe();
     });

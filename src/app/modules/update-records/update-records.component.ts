@@ -145,6 +145,7 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
           .subscribe((data) => {
             console.log('isSuccessS: ', data);
             this.getPriceSignInfo();
+            this.getThumbNails();
           });
         this.subscriptions.push(sub2);
       } else {
@@ -174,6 +175,7 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
             .postPriceSign(productsArray)
             .subscribe((data) => {
               this.getPriceSignInfo();
+              this.getThumbNails();
               console.log('isSuccessM: ', data);
             });
           this.subscriptions.push(sub3);
@@ -194,6 +196,7 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
   getThumbNails(): void {
     this.dashboardService.getThumbNails().subscribe((data) => {
       this.thumbNails = data;
+      this.changeDetectorRefs.detectChanges();
     });
   }
 

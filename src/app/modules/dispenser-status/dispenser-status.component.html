@@ -23,7 +23,7 @@
             class="columnClassValue"
           >
             <div class="card-title-1-value card-title1-fontSize">
-              {{ item.productPrice | currency }}
+              {{ item.productPrice | currency: 'USD':true: '1.4-4' }}
             </div>
             <div class="card-title-2-value card-title2-fontSize">
               {{ item.noOfSales | number: '1.0-0' }}
