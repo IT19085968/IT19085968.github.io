@@ -84,6 +84,7 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(sub3);
 
     this.getThumbNails();
+    this.initializeTransactions();
   }
 
   ngAfterViewInit(): void {
@@ -99,6 +100,12 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
       TerminalID: [''],
       BlendID: [''],
     });
+  }
+
+  initializeTransactions():void{
+    this.searchFormGroup.controls.FromDate.setValue(new Date());
+    this.searchFormGroup.controls.ToDate.setValue(new Date());
+    this.applyFilter();
   }
 
   applyFilter(): void {
