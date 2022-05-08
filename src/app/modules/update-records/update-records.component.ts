@@ -4,6 +4,7 @@ import {
   OnInit,
   ViewChild,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -12,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import * as moment from 'moment';
-import { Subscription, Observable, BehaviorSubject, interval } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject, interval, forkJoin, timer, Subject, of } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TerminalsService } from '../terminals.service';
@@ -20,13 +21,14 @@ import { AuthService } from 'src/app/modules/auth.service';
 import { PriceSign } from 'src/app/shared/models/PriceSign';
 import { User } from '../../shared/models/User';
 import { DashboardService } from '../dashboard.service';
+import { catchError, filter, map, mergeMap, multicast, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-update-records',
   templateUrl: './update-records.component.html',
   styleUrls: ['./update-records.component.scss'],
 })
-export class UpdateRecordsComponent implements OnInit, AfterViewInit {
+export class UpdateRecordsComponent implements OnInit, AfterViewInit,OnDestroy {
   updateRecordsFormGroup!: FormGroup;
   panalID: FormControl = new FormControl();
   productID: FormControl = new FormControl();
@@ -45,6 +47,10 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
   };
 
   dataSource = new MatTableDataSource<any>();
+
+  timerSub: any = [];
+
+  testSubject = new Subject();
 
   @ViewChild('paginatorUR')
   paginatorUR!: MatPaginator;
@@ -145,9 +151,10 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
           .subscribe((data) => {
             console.log('isSuccessS: ', data);
             this.getPriceSignInfo();
-            setTimeout(() => {
-              this.getThumbNails();
-            }, 500);
+            // setTimeout(() => {
+            //   this.getThumbNails();
+            // }, 60000);
+            // this.getPriceInfoUpdated();
           });
         this.subscriptions.push(sub2);
       } else {
@@ -177,9 +184,10 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
             .postPriceSign(productsArray)
             .subscribe((data) => {
               this.getPriceSignInfo();
-              setTimeout(() => {
-                this.getThumbNails();
-              }, 500);
+              // setTimeout(() => {
+              //   this.getThumbNails();
+              // }, 13000);
+              // this.getPriceInfoUpdated();
               console.log('isSuccessM: ', data);
             });
           this.subscriptions.push(sub3);
@@ -198,10 +206,27 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
   }
 
   getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-      this.changeDetectorRefs.detectChanges();
-    });
+    let timerTest: any = timer(0, 60000).pipe(
+      takeUntil(this.testSubject),
+      switchMap((x) => {
+        return this.dashboardService.getThumbNails().pipe(
+          catchError((err) => {
+            // Handle errors
+            console.error(err);
+            return of([]);
+          })
+        );
+      }),
+      multicast(() => new Subject())
+    );
+    this.timerSub.push(
+      timerTest.subscribe((data: any[]) => {
+        this.thumbNails = [];
+        this.thumbNails = data;
+      })
+    );
+
+    timerTest.connect();
   }
 
   priceChangePerLitre(): void {
@@ -216,13 +241,13 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
       let total: number = 0;
       const newPriceChange: number = Math.abs(priceChange);
 
-      let b1: any = currentPrice.toString().split('.');
+      let b1: any = currentPrice?.toString().split('.');
       let b1_max: number = 0;
       if (b1.length === 2) {
         b1_max = b1[1].length;
       }
 
-      let c1: any = newPriceChange.toString().split('.');
+      let c1: any = newPriceChange?.toString().split('.');
       let c1_max: number = 0;
       if (c1.length == 2) {
         c1_max = c1[1].length;
@@ -241,7 +266,33 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getPriceInfoUpdated():void{
+    this.terminalsService.getPriceSign().pipe(
+      // filter((res: any) => res.isSuccessS === true{}),
+      tap((response:any) => {console.log('data from api 1.1', response); this.dataSource.data = response;}),
+      mergeMap((res: any) => {
+        // this.dataSource.data = res;
+        console.log('data from api 1', res);
+         return this.dashboardService.getThumbNails();
+      })
+     ).subscribe(da => {
+      console.log('task', da);
+      this.thumbNails = [];
+      this.thumbNails = da;
+    });
+  }
+
   clearFields(): void {
     this.updateRecordsFormGroup.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.testSubject.next();
+    this.timerSub.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.subscriptions.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
   }
 }
