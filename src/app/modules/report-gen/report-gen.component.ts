@@ -1,0 +1,495 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { forkJoin, Observable, Subscription } from 'rxjs';
+import { ReportsService } from '../reports.service';
+
+const pdfMake = require('pdfmake/build/pdfmake.js');
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DashboardService } from '../dashboard.service';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
+@Component({
+  selector: 'app-report-gen',
+  templateUrl: './report-gen.component.html',
+  styleUrls: ['./report-gen.component.scss']
+})
+export class ReportGenComponent implements OnInit, OnDestroy {
+  // @Input() reportType:string;
+
+  reportT: any = '';
+  disp: any = '';
+  // report: any = '';
+  sales: any = [];
+  pumps: any = [];
+  terminals: any = [];
+  subscriptions: Subscription[] = [];
+
+  thumbNails: any = [];
+
+  reportsFormGroup!: FormGroup;
+
+  constructor(private _Activatedroute: ActivatedRoute,
+    private _router: Router,
+    private formBuilder: FormBuilder,
+    private dashboardService: DashboardService,
+    private reportsService: ReportsService) { }
+
+  ngOnInit(): void {
+    this.reportT = this._Activatedroute.snapshot.paramMap.get('id');
+    console.log('reportT:', this.reportT);
+    this.getThumbNails();
+    this.displayReportType();
+    this.createDeliveryForm();
+  }
+
+  getThumbNails(): void {
+    this.dashboardService.getThumbNails().subscribe((data) => {
+      this.thumbNails = data;
+    });
+  }
+
+  displayReportType(): void {
+    switch (this.reportT) {
+      case "1": {
+        this.disp = 'Total Sales'
+        break;
+      }
+      case "2": {
+        this.disp = 'Pay Mode Wise Sales'
+        break;
+      }
+      case "3": {
+        this.disp = 'Pump and Terminal Wise Sales'
+        break;
+      }
+      default: {
+        //statements; 
+        break;
+      }
+    }
+  }
+
+  createDeliveryForm(): void {
+    this.reportsFormGroup = this.formBuilder.group({
+      FromDate: [''],
+      ToDate: [''],
+    });
+  }
+
+  getReport(): void {
+    const filter: any = {};
+
+    filter.FromDate = this.reportsFormGroup?.value.FromDate
+      ? moment(this.reportsFormGroup?.value.FromDate).format(
+        'YYYY-MM-DD'
+      )
+      : null;
+    filter.ToDate = this.reportsFormGroup?.value.ToDate
+      ? moment(this.reportsFormGroup?.value.ToDate).format('YYYY-MM-DD')
+      : null;
+
+    if (this.reportT === "1") {
+      const subscription: any = this.reportsService
+        .getSalesTotalReport(filter.FromDate, filter.ToDate)
+        .subscribe((data) => {
+          this.sales = data;
+          this.generatePDF();
+        });
+      this.subscriptions.push(subscription);
+    }
+
+    if (this.reportT === "2") {
+      const subscription: any = this.reportsService
+        .getPMWiseReport(filter.FromDate, filter.ToDate)
+        .subscribe((data) => {
+          this.sales = data;
+          // this.generatePDF();
+        });
+      this.subscriptions.push(subscription);
+    }
+
+    if (this.reportT === "3") {
+      const reports: any[] = [];
+      const pumpReport$: Observable<any> = this.reportsService.getPumps(filter.FromDate, filter.ToDate);
+      reports.push(pumpReport$);
+      const terminalReport$: Observable<any> = this.reportsService.getTerminals(filter.FromDate, filter.ToDate);
+      reports.push(terminalReport$);
+
+      const subscription: any = forkJoin(reports).subscribe((responses: any[]) => {
+        this.sales = responses;
+        if (responses[0].length > 0) {
+          this.pumps = responses[0];
+        }
+        if (responses[1].length > 0) {
+          this.terminals = responses[1];
+        }
+        this.generatePumpsAndTerminalsPDF();
+      });
+      this.subscriptions.push(subscription);
+    }
+
+  }
+
+  clearFieldsDel(): void {
+    this.reportsFormGroup.reset();
+    this.sales = [];
+  }
+
+  generatePDF() {
+    if (this.reportT === "1") {
+      const docDefinition = {
+        content:
+          [
+            {
+              columns: [
+                [
+                  {
+                    text: "ABC Store",
+                    fontSize: 13,
+                    // bold: true
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+                [
+                  {
+                    text: [
+                      {
+                        text: `Print Date :  `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `   ${moment(new Date()).format('YYYY/MM/DD')}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      },
+
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: `Print Time : `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `  ${new Date().toLocaleTimeString().replace("AM", "am").replace("PM", "pm")}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      }
+                    ]
+                  }
+
+                ]
+              ]
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 10,
+                  x2: 530, y2: 10,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              text: 'Sales Report',
+              fontSize: 13,
+              margin: 5,
+              alignment: 'center'
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 0,
+                  x2: 530, y2: 0,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              columns: [
+                [
+                  {
+
+                    // bold: true
+                    text: [
+                      {
+                        text: `\nFrom: `,
+                        fontSize: 8,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \t\t\t\t`,
+                        fontSize: 8,
+                      },
+                      {
+                        text: `To: `,
+                        fontSize: 8,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \n\n\n`,
+                        fontSize: 8,
+                      },
+                    ]
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+              ]
+            },
+            {
+              table: {
+                headerRows: 1,
+                widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                body: [
+                  [{ text: 'Receipt#', border: [false, false, false, true] }, { text: 'Date', border: [false, false, false, true] }, { text: 'Time', border: [false, false, false, true] }, { text: 'Pump', border: [false, false, false, true] }, { text: 'Blend', border: [false, false, false, true] }, { text: 'Quantity(Ltrs)', border: [false, false, false, true] }, { text: 'UnitPrice', border: [false, false, false, true] }, { text: 'Init Amount', border: [false, false, false, true] }, { text: 'Pay Mode', border: [false, false, false, true] }],
+                  ...this.sales.map((p: any) => ([{ text: p.transactionNumber, border: [false, false, false, false] }, { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'), border: [false, false, false, false] }, { text: p.dTime, border: [false, false, false, false] }, { text: p.pumpID, border: [false, false, false, false] }, { text: p.productName, border: [false, false, false, false] }, { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] }, { text: parseFloat(p.unitPrice).toFixed(2), border: [false, false, false, false] }, { text: parseFloat(p.amount).toFixed(2), border: [false, false, false, false] }, { text: p.cardType, border: [false, false, false, false] }])),
+                  [{ text: 'Totals', colSpan: 3, border: [false, true, false, true] },
+                  { text: '', border: [false, true, false, true] }, { text: '', border: [false, true, false, true] },
+                  { text: '', border: [false, true, false, true] }, { text: '', border: [false, true, false, true] },
+                  { text: this.sales.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, true, false, true] },
+                  { text: '', border: [false, true, false, true] },
+                  { text: this.sales.reduce((sum: any, p: any) => sum + parseFloat(p.amount), 0).toFixed(2), border: [false, true, false, true] },
+                  { text: '', border: [false, true, false, true] }]
+
+                ],
+              },
+              // layout: 'headerLineOnly',
+              fontSize: 8,
+            }
+          ],
+        styles: {
+          sectionHeader: {
+            bold: true,
+            decoration: 'underline',
+            fontSize: 14,
+            margin: [0, 15, 0, 15]
+          }
+        }
+
+      };
+      pdfMake.createPdf(docDefinition).open();
+    }
+
+  }
+
+  generatePumpsAndTerminalsPDF() {
+    if (this.reportT === "3") {
+      const docDefinition = {
+        content:
+          [
+            {
+              columns: [
+                [
+                  {
+                    text: "ABC Store",
+                    fontSize: 13,
+                    // bold: true
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+                [
+                  {
+                    text: [
+                      {
+                        text: `Print Date :  `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `   ${moment(new Date()).format('YYYY/MM/DD')}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      },
+
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: `Print Time : `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `  ${new Date().toLocaleTimeString().replace("AM", "am").replace("PM", "pm")}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      }
+                    ]
+                  }
+
+                ]
+              ]
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 10,
+                  x2: 530, y2: 10,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              text: 'Pump & Terminal Wise Sales Report',
+              fontSize: 13,
+              margin: 5,
+              alignment: 'center'
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 0,
+                  x2: 530, y2: 0,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              columns: [
+                [
+                  {
+
+                    // bold: true
+                    text: [
+                      {
+                        text: `\nFrom: `,
+                        fontSize: 9,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \t\t\t\t`,
+                        fontSize: 9,
+                      },
+                      {
+                        text: `To: `,
+                        fontSize: 9,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \n\n\n`,
+                        fontSize: 9,
+                      },
+                    ]
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+              ]
+            },
+            {
+              columns: [
+                [
+                  {
+                    text: "Pump Wise Sales",
+                    fontSize: 11,
+                    bold: true,
+                    margin: 7,
+                  },
+                  {
+                    table: {
+                      headerRows: 1,
+                      widths: ['auto', 'auto', 'auto', 'auto'],
+                      body: [
+                        [{ text: 'Pump', border: [false, true, false, true] },
+                        { text: 'Quantity(Ltrs)', border: [false, true, false, true] },
+                        { text: 'Amount', border: [false, true, false, true] },
+                        { text: 'Date', border: [false, true, false, true] }],
+                        ...this.pumps.map((p: any) => ([
+                          { text: p.pumpID, border: [false, false, false, false] },
+                          { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] },
+                          { text: parseFloat(p.totalAmount).toFixed(2), border: [false, false, false, false] },
+                          { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'), bold: true, border: [false, false, false, false] },
+                        ])),
+                        [{ text: 'Totals', border: [false, false, false, true], bold: true },
+                        { text: this.pumps.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, false, false, true], bold: true },
+                        { text: this.pumps.reduce((sum: any, p: any) => sum + parseFloat(p.totalAmount), 0).toFixed(2), border: [false, false, false, true], bold: true },
+                        { text: '', border: [false, false, false, true], bold: true }]
+
+                      ],
+                    },
+                    // layout: 'headerLineOnly',
+                    fontSize: 9,
+                  }
+                ],
+                [
+                  {
+                    text: "Terminal Wise Sales",
+                    fontSize: 11,
+                    bold: true,
+                    margin: 7,
+                    border: true
+                  },
+                  {
+                    table: {
+                      headerRows: 1,
+                      widths: ['auto', 'auto', 'auto','auto'],
+                      body: [
+                        [{ text: 'TerminalID', border: [false, true, false, true] }, 
+                        { text: 'Quantity(Ltrs)', border: [false, true, false, true] }, 
+                        { text: 'Amount', border: [false, true, false, true] },
+                        { text: 'Date', border: [false, true, false, true] }],
+                        ...this.terminals.map((p: any) => ([
+                          { text: p.terminalID, border: [false, false, false, false] }, 
+                          { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] }, 
+                          { text: parseFloat(p.totalAmt).toFixed(2), border: [false, false, false, false] }, 
+                          { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'),bold: true, border: [false, false, false, false] }, 
+                          ])),
+                          [{ text: 'Totals', border: [false, false, false, true],bold: true },
+                          { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, false, false, true],bold: true },
+                          { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.totalAmt), 0).toFixed(2), border: [false, false, false, true],bold: true },
+                          { text: '', border: [false, false, false, true],bold: true }]
+      
+                      ],
+                    },
+                    // layout: 'lightHorizontalLines',
+                    fontSize: 9,
+                  },
+                  // layout: 'headerLineOnly',
+                ],
+              ],
+            },
+
+          ],
+        styles: {
+          sectionHeader: {
+            bold: true,
+            decoration: 'underline',
+            fontSize: 14,
+            margin: [0, 15, 0, 15]
+          }
+        }
+
+      };
+      pdfMake.createPdf(docDefinition).open();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+  }
+
+
+}

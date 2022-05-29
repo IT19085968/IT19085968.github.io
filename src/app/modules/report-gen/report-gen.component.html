@@ -1,0 +1,114 @@
+<!-- <mat-card> -->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- <div> -->
+        <div fxFlex="24" *ngFor="let item of thumbNails">
+          <mat-card
+            class="thumbNail-card"
+            [ngStyle]="{ 'background-color': item.backColour }"
+          >
+            <div fxLayout="row" class="cardTextClass">
+              <div>
+                <mat-card-title fxLayout="column" class="columnClass">
+                  <div class="card-title-1 card-title1-fontSize">
+                    {{ item.itemName }}
+                  </div>
+                  <div class="card-title-2 card-title2-fontSize">No of Sales</div>
+                  <div class="card-title-2 card-title2-fontSize">Total Orders</div>
+                </mat-card-title>
+              </div>
+              <div>
+                <mat-card-title
+                  fxLayout="column"
+                  fxLayoutAlign="space-between end"
+                  class="columnClassValue"
+                >
+                  <div class="card-title-1-value card-title1-fontSize">
+                    {{ item.productPrice | currency: 'USD':true: '1.4-4' }}
+                  </div>
+                  <div class="card-title-2-value card-title2-fontSize">
+                    {{ item.noOfSales | number: '1.0-0' }}
+                  </div>
+                  <div class="card-title-2-value card-title2-fontSize">
+                    {{ item.totalAmount | currency }}
+                  </div>
+                </mat-card-title>
+              </div>
+            </div>
+      
+            <mat-card-content class="card-content-common">
+              <div>
+                <!-- <i class="fa fa-clock faa-pulse"></i> -->
+                <span class="material-icons icon-ref icon-ref-Size"
+                  >local_gas_station</span
+                >
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
+      </div>
+      
+      <br />
+      
+      <mat-divider></mat-divider>
+      
+      <br />
+
+      <form [formGroup]="reportsFormGroup">
+        <div class="profile-card">
+          <div class="header">
+            <h2>{{disp}}</h2>
+          </div>
+        </div>
+        <!-- <div class="form-row"> -->
+        <div fxLayout="row" fxLayoutGap="10px">
+          <div class="form-group col-md-2">
+            <mat-form-field class="mat-form-field-fluid" appearance="outline">
+              <mat-label>From Date</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="FromDate" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+              <mat-hint align="start">
+                <strong>Filter</strong> by From Date
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-2">
+            <mat-form-field class="mat-form-field-fluid" appearance="outline">
+              <mat-label>To Date</mat-label>
+              <input matInput [matDatepicker]="picker3" formControlName="ToDate" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker3"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+              <mat-hint align="start"> <strong>Filter</strong> by To Date </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="footerButtons" fxLayoutGap="10px">
+            <button
+              mat-raised-button
+              color="accent"
+              matTooltip="Search by fields"
+              class="m-1 w-100"
+              (click)="getReport()"
+            >
+              Apply
+            </button>
+      
+            <button
+              class="btn btn-warning"
+              mat-raised-button
+              color="btn-warning"
+              matTooltip="Search by fields"
+              (click)="clearFieldsDel()"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      </form>
+

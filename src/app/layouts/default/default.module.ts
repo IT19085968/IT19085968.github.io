@@ -17,6 +17,7 @@ import { UserService } from '../../modules/user.service';
 import { AuthService } from '../../modules/auth.service';
 import { AuthGuardService } from '../../modules/auth-guard.service';
 import { TerminalsService } from 'src/app/modules/terminals.service';
+import { ReportsService } from 'src/app/modules/reports.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +42,8 @@ import { LoginComponent } from 'src/app/modules/login/login.component';
 import { TankInfoComponent } from 'src/app/modules/tank-info/tank-info.component';
 import { UpdateRecordsComponent } from 'src/app/modules/update-records/update-records.component';
 import { TerminalsComponent } from 'src/app/modules/terminals/terminals.component';
+import { ReportsComponent } from 'src/app/modules/reports/reports.component';
+import { ReportGenComponent } from 'src/app/modules/report-gen/report-gen.component';
 @NgModule({
   declarations: [
     DefaultComponent,
@@ -52,6 +55,8 @@ import { TerminalsComponent } from 'src/app/modules/terminals/terminals.componen
     TankInfoComponent,
     UpdateRecordsComponent,
     TerminalsComponent,
+    ReportsComponent,
+    ReportGenComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +87,7 @@ import { TerminalsComponent } from 'src/app/modules/terminals/terminals.componen
     AuthService,
     AuthGuardService,
     TerminalsService,
+    ReportsService,
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,

@@ -28,7 +28,7 @@ import { catchError, filter, map, mergeMap, multicast, switchMap, takeUntil, tap
   templateUrl: './update-records.component.html',
   styleUrls: ['./update-records.component.scss'],
 })
-export class UpdateRecordsComponent implements OnInit, AfterViewInit,OnDestroy {
+export class UpdateRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   updateRecordsFormGroup!: FormGroup;
   panalID: FormControl = new FormControl();
   productID: FormControl = new FormControl();
@@ -49,6 +49,7 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit,OnDestroy {
   dataSource = new MatTableDataSource<any>();
 
   timerSub: any = [];
+  sales: any = [];
 
   testSubject = new Subject();
 
@@ -78,7 +79,7 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit,OnDestroy {
     private authService: AuthService,
     private dashboardService: DashboardService,
     private changeDetectorRefs: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -266,16 +267,16 @@ export class UpdateRecordsComponent implements OnInit, AfterViewInit,OnDestroy {
     }
   }
 
-  getPriceInfoUpdated():void{
+  getPriceInfoUpdated(): void {
     this.terminalsService.getPriceSign().pipe(
       // filter((res: any) => res.isSuccessS === true{}),
-      tap((response:any) => {console.log('data from api 1.1', response); this.dataSource.data = response;}),
+      tap((response: any) => { console.log('data from api 1.1', response); this.dataSource.data = response; }),
       mergeMap((res: any) => {
         // this.dataSource.data = res;
         console.log('data from api 1', res);
-         return this.dashboardService.getThumbNails();
+        return this.dashboardService.getThumbNails();
       })
-     ).subscribe(da => {
+    ).subscribe(da => {
       console.log('task', da);
       this.thumbNails = [];
       this.thumbNails = da;

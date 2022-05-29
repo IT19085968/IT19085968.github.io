@@ -10,6 +10,9 @@ import { TankInfoComponent } from './modules/tank-info/tank-info.component';
 import { AuthGuardService } from './modules/auth-guard.service';
 import { UpdateRecordsComponent } from './modules/update-records/update-records.component';
 import { TerminalsComponent } from './modules/terminals/terminals.component';
+import { ReportsComponent } from './modules/reports/reports.component';
+import { ReportGenComponent } from './modules/report-gen/report-gen.component';
+
 
 const routes: Routes = [
   {
@@ -54,6 +57,23 @@ const routes: Routes = [
       {
         path: 'terminals',
         component: TerminalsComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+        canActivate: [AuthGuardService],
+        // children: [
+        //   {
+        //     path: 'reportsGen',
+        //     component: ReportGenComponent,
+        //     canActivate: [AuthGuardService],
+        //   },
+        // ]
+      },
+      {
+        path: 'reportsGen/:id',
+        component: ReportGenComponent,
         canActivate: [AuthGuardService],
       },
     ],
