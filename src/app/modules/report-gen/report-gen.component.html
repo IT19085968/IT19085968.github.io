@@ -94,9 +94,28 @@
               color="accent"
               matTooltip="Search by fields"
               class="m-1 w-100"
-              (click)="getReport()"
+              (click)="getReport('open')"
             >
-              Apply
+              Open Report
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              matTooltip="Search by fields"
+              class="m-1 w-100"
+              (click)="getReport('download')"
+            >
+              Download Report
+            </button>
+
+            <button
+              mat-raised-button
+              color="warn"
+              matTooltip="Search by fields"
+              class="m-1 w-100"
+              (click)="getReport('print')"
+            >
+              Print Report
             </button>
       
             <button

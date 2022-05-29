@@ -47,4 +47,11 @@ export class ReportsService {
       this.httpOptions
     );
   }
+
+  getSalesComparison(FromDate: any, ToDate: any): Observable<any[]> {
+    return this.http.get<any>(
+      `${environment.apiURL}/Reports/SalesComparison?FromDate=${FromDate}&ToDate=${ToDate}`,
+      this.httpOptions
+    );
+  }
 }

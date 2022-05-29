@@ -64,6 +64,10 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         this.disp = 'Pump and Terminal Wise Sales'
         break;
       }
+      case "4": {
+        this.disp = 'Sales Comparison'
+        break;
+      }
       default: {
         //statements; 
         break;
@@ -78,7 +82,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
     });
   }
 
-  getReport(): void {
+  getReport(e: any): void {
     const filter: any = {};
 
     filter.FromDate = this.reportsFormGroup?.value.FromDate
@@ -95,7 +99,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         .getSalesTotalReport(filter.FromDate, filter.ToDate)
         .subscribe((data) => {
           this.sales = data;
-          this.generatePDF();
+          this.generatePDF(filter.FromDate, filter.ToDate, e);
         });
       this.subscriptions.push(subscription);
     }
@@ -125,8 +129,18 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         if (responses[1].length > 0) {
           this.terminals = responses[1];
         }
-        this.generatePumpsAndTerminalsPDF();
+        this.generatePumpsAndTerminalsPDF(filter.FromDate, filter.ToDate, e);
       });
+      this.subscriptions.push(subscription);
+    }
+
+    if (this.reportT === "4") {
+      const subscription: any = this.reportsService
+        .getSalesComparison(filter.FromDate, filter.ToDate)
+        .subscribe((data) => {
+          this.sales = data;
+          this.generateSalesComparisonPDF(filter.FromDate, filter.ToDate, e);
+        });
       this.subscriptions.push(subscription);
     }
 
@@ -137,7 +151,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
     this.sales = [];
   }
 
-  generatePDF() {
+  generatePDF(fromDate: any, ToDate: any, e: any) {
     if (this.reportT === "1") {
       const docDefinition = {
         content:
@@ -229,7 +243,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         bold: true
                       },
                       {
-                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \t\t\t\t`,
+                        text: ` ${moment(new Date(fromDate)).format('YYYY-MM-DD')} \t\t\t\t`,
                         fontSize: 8,
                       },
                       {
@@ -238,7 +252,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         bold: true
                       },
                       {
-                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \n\n\n`,
+                        text: ` ${moment(new Date(ToDate)).format('YYYY-MM-DD')} \n\n\n`,
                         fontSize: 8,
                       },
                     ]
@@ -280,12 +294,19 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         }
 
       };
-      pdfMake.createPdf(docDefinition).open();
+      // pdfMake.createPdf(docDefinition).open();
+      if (e === 'download') {
+        pdfMake.createPdf(docDefinition).download();
+      } else if (e === 'print') {
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+        pdfMake.createPdf(docDefinition).open();
+      }
     }
 
   }
 
-  generatePumpsAndTerminalsPDF() {
+  generatePumpsAndTerminalsPDF(fromDate: any, ToDate: any, e: any) {
     if (this.reportT === "3") {
       const docDefinition = {
         content:
@@ -377,7 +398,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         bold: true
                       },
                       {
-                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \t\t\t\t`,
+                        text: ` ${moment(new Date(fromDate)).format('YYYY-MM-DD')} \t\t\t\t`,
                         fontSize: 9,
                       },
                       {
@@ -386,7 +407,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         bold: true
                       },
                       {
-                        text: ` ${moment(new Date()).format('YYYY-MM-DD')} \n\n\n`,
+                        text: ` ${moment(new Date(ToDate)).format('YYYY-MM-DD')} \n\n\n`,
                         fontSize: 9,
                       },
                     ]
@@ -443,23 +464,23 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                   {
                     table: {
                       headerRows: 1,
-                      widths: ['auto', 'auto', 'auto','auto'],
+                      widths: ['auto', 'auto', 'auto', 'auto'],
                       body: [
-                        [{ text: 'TerminalID', border: [false, true, false, true] }, 
-                        { text: 'Quantity(Ltrs)', border: [false, true, false, true] }, 
+                        [{ text: 'TerminalID', border: [false, true, false, true] },
+                        { text: 'Quantity(Ltrs)', border: [false, true, false, true] },
                         { text: 'Amount', border: [false, true, false, true] },
                         { text: 'Date', border: [false, true, false, true] }],
                         ...this.terminals.map((p: any) => ([
-                          { text: p.terminalID, border: [false, false, false, false] }, 
-                          { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] }, 
-                          { text: parseFloat(p.totalAmt).toFixed(2), border: [false, false, false, false] }, 
-                          { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'),bold: true, border: [false, false, false, false] }, 
-                          ])),
-                          [{ text: 'Totals', border: [false, false, false, true],bold: true },
-                          { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, false, false, true],bold: true },
-                          { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.totalAmt), 0).toFixed(2), border: [false, false, false, true],bold: true },
-                          { text: '', border: [false, false, false, true],bold: true }]
-      
+                          { text: p.terminalID, border: [false, false, false, false] },
+                          { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] },
+                          { text: parseFloat(p.totalAmt).toFixed(2), border: [false, false, false, false] },
+                          { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'), bold: true, border: [false, false, false, false] },
+                        ])),
+                        [{ text: 'Totals', border: [false, false, false, true], bold: true },
+                        { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, false, false, true], bold: true },
+                        { text: this.terminals.reduce((sum: any, p: any) => sum + parseFloat(p.totalAmt), 0).toFixed(2), border: [false, false, false, true], bold: true },
+                        { text: '', border: [false, false, false, true], bold: true }]
+
                       ],
                     },
                     // layout: 'lightHorizontalLines',
@@ -481,8 +502,184 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         }
 
       };
-      pdfMake.createPdf(docDefinition).open();
+      // pdfMake.createPdf(docDefinition).open();
+      if (e === 'download') {
+        pdfMake.createPdf(docDefinition).download();
+      } else if (e === 'print') {
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+        pdfMake.createPdf(docDefinition).open();
+      }
     }
+  }
+
+  generateSalesComparisonPDF(fromDate: any, ToDate: any, e: any) {
+    if (this.reportT === "4") {
+      const docDefinition = {
+        content:
+          [
+            {
+              columns: [
+                [
+                  {
+                    text: "ABC Store",
+                    fontSize: 13,
+                    // bold: true
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+                [
+                  {
+                    text: [
+                      {
+                        text: `Print Date :  `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `   ${moment(new Date()).format('YYYY/MM/DD')}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      },
+
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: `Print Time : `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `  ${new Date().toLocaleTimeString().replace("AM", "am").replace("PM", "pm")}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      }
+                    ]
+                  }
+
+                ]
+              ]
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 10,
+                  x2: 530, y2: 10,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              text: 'Sales Comparison Report',
+              fontSize: 13,
+              margin: 5,
+              alignment: 'center'
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 0,
+                  x2: 530, y2: 0,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              columns: [
+                [
+                  {
+
+                    // bold: true
+                    text: [
+                      {
+                        text: `\nFrom: `,
+                        fontSize: 8,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date(fromDate)).format('YYYY-MM-DD')} \t\t\t\t`,
+                        fontSize: 8,
+                      },
+                      {
+                        text: `To: `,
+                        fontSize: 8,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date(ToDate)).format('YYYY-MM-DD')} \n\n\n`,
+                        fontSize: 8,
+                      },
+                    ]
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+              ]
+            },
+            {
+              table: {
+                headerRows: 1,
+                // widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                body: [
+                  [{ text: 'Item Code', border: [true, true, false, false] },
+                  { text: 'Item Name', border: [true, true, false, false] },
+                  { text: 'Electronic Totals', border: [true, true, true, true], colSpan: 2 },
+                  { text: '', border: [true, true, true, true] },
+                  { text: 'Delivery Totals', border: [true, true, true, true], colSpan: 2 },
+                  { text: '', border: [true, true, true, true] },
+                  { text: 'Sales Totals', border: [true, true, true, true] },],
+                  [{ text: '', border: [true, false, false, false] },
+                  { text: '', border: [true, false, false, false] },
+                  { text: 'Qty(Ltrs)', border: [true, true, true, true] },
+                  { text: 'Amount(NZD)', border: [true, true, true, true] },
+                  { text: 'Qty(Ltrs)', border: [true, true, true, true] },
+                  { text: 'Amount(NZD)', border: [true, true, true, true] },
+                  { text: 'Amount(NZD)', border: [true, true, true, true] },
+                  ],
+                  ...this.sales.map((p: any) => ([
+                    { text: p.itemcode, border: [true, true, true, true] },
+                    { text: p.itemname, border: [true, true, true, true] },
+                    { text: parseFloat(p.electronicTotalQty).toFixed(2), border: [true, true, false, true] },
+                    { text: parseFloat(p.electronicTotalAmount).toFixed(2), border: [true, true, true, true] },
+                    { text: parseFloat(p.deliveryTotalQty).toFixed(2), border: [true, true, true, true] },
+                    { text: parseFloat(p.deliveryTotalAmount).toFixed(2), border: [true, true, true, true] },
+                    { text: parseFloat(p.salesAmount).toFixed(2), border: [true, true, true, true] },])),
+
+
+                ],
+              },
+              // layout: 'lightHorizontalLines',
+              fontSize: 8,
+            }
+          ],
+        styles: {
+          sectionHeader: {
+            bold: true,
+            decoration: 'underline',
+            fontSize: 14,
+            margin: [0, 15, 0, 15]
+          }
+        }
+
+      };
+      if (e === 'download') {
+        pdfMake.createPdf(docDefinition).download();
+      } else if (e === 'print') {
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+        pdfMake.createPdf(docDefinition).open();
+      }
+    }
+
   }
 
   ngOnDestroy(): void {
