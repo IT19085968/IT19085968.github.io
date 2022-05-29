@@ -109,7 +109,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         .getPMWiseReport(filter.FromDate, filter.ToDate)
         .subscribe((data) => {
           this.sales = data;
-          // this.generatePDF();
+          this.generatePMWisePDF(filter.FromDate, filter.ToDate, e);
         });
       this.subscriptions.push(subscription);
     }
@@ -160,7 +160,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: "ABC Store",
+                    text: " ",
                     fontSize: 13,
                     // bold: true
                   },
@@ -306,6 +306,166 @@ export class ReportGenComponent implements OnInit, OnDestroy {
 
   }
 
+  generatePMWisePDF(fromDate: any, ToDate: any, e: any) {
+    if (this.reportT === "2") {
+      const docDefinition = {
+        content:
+          [
+            {
+              columns: [
+                [
+                  {
+                    text: " ",
+                    fontSize: 13,
+                    // bold: true
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+                [
+                  {
+                    text: [
+                      {
+                        text: `Print Date :  `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `   ${moment(new Date()).format('YYYY/MM/DD')}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      },
+
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: `Print Time : `,
+                        fontSize: 9,
+                        alignment: 'right',
+                        bold: true
+                      },
+                      {
+                        text: `  ${new Date().toLocaleTimeString().replace("AM", "am").replace("PM", "pm")}`,
+                        fontSize: 9,
+                        alignment: 'right'
+                      }
+                    ]
+                  }
+
+                ]
+              ]
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 10,
+                  x2: 530, y2: 10,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              text: 'Pay Mode Wise Sales Report',
+              fontSize: 13,
+              margin: 5,
+              alignment: 'center'
+            },
+            {
+              canvas: [
+                {
+                  type: 'line',
+                  x1: 0, y1: 0,
+                  x2: 530, y2: 0,
+                  lineWidth: 1
+                },
+              ]
+            },
+            {
+              columns: [
+                [
+                  {
+
+                    // bold: true
+                    text: [
+                      {
+                        text: `\nFrom: `,
+                        fontSize: 9,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date(fromDate)).format('YYYY-MM-DD')} \t\t\t\t`,
+                        fontSize: 9,
+                      },
+                      {
+                        text: `To: `,
+                        fontSize: 9,
+                        bold: true
+                      },
+                      {
+                        text: ` ${moment(new Date(ToDate)).format('YYYY-MM-DD')} \n\n\n`,
+                        fontSize: 9,
+                      },
+                    ]
+                  },
+                  // { text: "84 street, Baltimore" },
+                  // { text: "jqhome@gmail.com" },
+                  // { text: "51247862" }
+                ],
+              ]
+            },
+            {
+              table: {
+                headerRows: 1,
+                widths: [100, 100, 100, 'auto'],
+                body: [
+                  [{ text: 'CardTypeName', border: [false, true, false, true],bold:true,fontSize: 9 }, 
+                  { text: 'Quantity', border: [false, true, false, true],bold:true,fontSize: 9 }, 
+                  { text: 'TotalAmt', border: [false, true, false, true],bold:true,fontSize: 9 }, 
+                  { text: 'Date', border: [false, true, false, true],bold:true,fontSize: 9 },],
+                  ...this.sales.map((p: any) => ([{ text: p.cardType, border: [false, false, false, false],fontSize: 8 }, 
+                    { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false],fontSize: 8 }, 
+                    { text: parseFloat(p.totalAmt).toFixed(2), border: [false, false, false, false],fontSize: 8 },
+                    { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'), border: [false, false, false, false],fontSize: 8 }, 
+                    
+                    ])),
+                  [{ text: '', border: [false, true, false, true],fontSize: 8 },
+                  { text: this.sales.reduce((sum: any, p: any) => sum + parseFloat(p.quantity), 0).toFixed(2), border: [false, true, false, true],bold:true,fontSize: 8 },
+                  { text: this.sales.reduce((sum: any, p: any) => sum + parseFloat(p.totalAmt), 0).toFixed(2), border: [false, true, false, true],bold:true,fontSize: 8 },
+                  { text: '', border: [false, true, false, true] }]
+
+                ],
+              },
+              // layout: 'headerLineOnly',
+              // fontSize: 9,
+            }
+          ],
+        styles: {
+          sectionHeader: {
+            bold: true,
+            decoration: 'underline',
+            fontSize: 14,
+            margin: [0, 15, 0, 15]
+          }
+        }
+
+      };
+      // pdfMake.createPdf(docDefinition).open();
+      if (e === 'download') {
+        pdfMake.createPdf(docDefinition).download();
+      } else if (e === 'print') {
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+        pdfMake.createPdf(docDefinition).open();
+      }
+    }
+
+  }
+
   generatePumpsAndTerminalsPDF(fromDate: any, ToDate: any, e: any) {
     if (this.reportT === "3") {
       const docDefinition = {
@@ -315,7 +475,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: "ABC Store",
+                    text: " ",
                     fontSize: 13,
                     // bold: true
                   },
@@ -522,7 +682,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: "ABC Store",
+                    text: " ",
                     fontSize: 13,
                     // bold: true
                   },

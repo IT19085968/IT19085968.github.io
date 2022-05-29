@@ -29,7 +29,7 @@ export class ReportsService {
 
   getPMWiseReport(FromDate: any, ToDate: any): Observable<any[]> {
     return this.http.get<any>(
-      `${environment.apiURL}/Reports/PMWiseSales?FromDate=${FromDate}&ToDate=${ToDate}`,
+      `${environment.apiURL}/Reports/PayModeWiseSales?FromDate=${FromDate}&ToDate=${ToDate}`,
       this.httpOptions
     );
   }
