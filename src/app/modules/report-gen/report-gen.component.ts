@@ -20,6 +20,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
 
   reportT: any = '';
   disp: any = '';
+  companyName: any = 'ABC Store';
   // report: any = '';
   sales: any = [];
   pumps: any = [];
@@ -57,11 +58,11 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         break;
       }
       case "2": {
-        this.disp = 'Pay Mode Wise Sales'
+        this.disp = 'Method of Payment'
         break;
       }
       case "3": {
-        this.disp = 'Pump and Terminal Wise Sales'
+        this.disp = 'Dispenser & Terminal Sales'
         break;
       }
       case "4": {
@@ -160,7 +161,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: " ",
+                    text: this.companyName,
                     fontSize: 13,
                     // bold: true
                   },
@@ -268,7 +269,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                 headerRows: 1,
                 widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
                 body: [
-                  [{ text: 'Receipt#', border: [false, false, false, true] }, { text: 'Date', border: [false, false, false, true] }, { text: 'Time', border: [false, false, false, true] }, { text: 'Pump', border: [false, false, false, true] }, { text: 'Blend', border: [false, false, false, true] }, { text: 'Quantity(Ltrs)', border: [false, false, false, true] }, { text: 'UnitPrice', border: [false, false, false, true] }, { text: 'Init Amount', border: [false, false, false, true] }, { text: 'Pay Mode', border: [false, false, false, true] }],
+                  [{ text: 'Receipt#', border: [false, false, false, true] }, { text: 'Date', border: [false, false, false, true] }, { text: 'Time', border: [false, false, false, true] }, { text: 'Pump', border: [false, false, false, true] }, { text: 'Blend', border: [false, false, false, true] }, { text: 'Quantity(Ltrs)', border: [false, false, false, true] }, { text: 'UnitPrice', border: [false, false, false, true] }, { text: 'Amount', border: [false, false, false, true] }, { text: 'Pay Mode', border: [false, false, false, true] }],
                   ...this.sales.map((p: any) => ([{ text: p.transactionNumber, border: [false, false, false, false] }, { text: moment(new Date(p.dDate)).format('YYYY/MM/DD'), border: [false, false, false, false] }, { text: p.dTime, border: [false, false, false, false] }, { text: p.pumpID, border: [false, false, false, false] }, { text: p.productName, border: [false, false, false, false] }, { text: parseFloat(p.quantity).toFixed(2), border: [false, false, false, false] }, { text: parseFloat(p.unitPrice).toFixed(2), border: [false, false, false, false] }, { text: parseFloat(p.amount).toFixed(2), border: [false, false, false, false] }, { text: p.cardType, border: [false, false, false, false] }])),
                   [{ text: 'Totals', colSpan: 3, border: [false, true, false, true] },
                   { text: '', border: [false, true, false, true] }, { text: '', border: [false, true, false, true] },
@@ -315,7 +316,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: " ",
+                    text: this.companyName,
                     fontSize: 13,
                     // bold: true
                   },
@@ -370,7 +371,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               ]
             },
             {
-              text: 'Pay Mode Wise Sales Report',
+              text: 'Method of Payment',
               fontSize: 13,
               margin: 5,
               alignment: 'center'
@@ -475,7 +476,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: " ",
+                    text: this.companyName,
                     fontSize: 13,
                     // bold: true
                   },
@@ -530,7 +531,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               ]
             },
             {
-              text: 'Pump & Terminal Wise Sales Report',
+              text: 'Dispenser & Terminal Sales Report',
               fontSize: 13,
               margin: 5,
               alignment: 'center'
@@ -582,7 +583,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: "Pump Wise Sales",
+                    text: "Dispenser Sales",
                     fontSize: 11,
                     bold: true,
                     margin: 7,
@@ -592,7 +593,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                       headerRows: 1,
                       widths: ['auto', 'auto', 'auto', 'auto'],
                       body: [
-                        [{ text: 'Pump', border: [false, true, false, true] },
+                        [{ text: 'Dispenser', border: [false, true, false, true] },
                         { text: 'Quantity(Ltrs)', border: [false, true, false, true] },
                         { text: 'Amount', border: [false, true, false, true] },
                         { text: 'Date', border: [false, true, false, true] }],
@@ -682,7 +683,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
               columns: [
                 [
                   {
-                    text: " ",
+                    text: this.companyName,
                     fontSize: 13,
                     // bold: true
                   },
