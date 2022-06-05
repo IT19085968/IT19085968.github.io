@@ -7,7 +7,6 @@ import { ReportsService } from '../reports.service';
 
 const pdfMake = require('pdfmake/build/pdfmake.js');
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { DashboardService } from '../dashboard.service';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -27,28 +26,18 @@ export class ReportGenComponent implements OnInit, OnDestroy {
   terminals: any = [];
   subscriptions: Subscription[] = [];
 
-  thumbNails: any = [];
-
   reportsFormGroup!: FormGroup;
 
   constructor(private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private formBuilder: FormBuilder,
-    private dashboardService: DashboardService,
     private reportsService: ReportsService) { }
 
   ngOnInit(): void {
     this.reportT = this._Activatedroute.snapshot.paramMap.get('id');
     console.log('reportT:', this.reportT);
-    this.getThumbNails();
     this.displayReportType();
     this.createDeliveryForm();
-  }
-
-  getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-    });
   }
 
   displayReportType(): void {
@@ -616,7 +605,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                 ],
                 [
                   {
-                    text: "Terminal Wise Sales",
+                    text: "Terminal Sales",
                     fontSize: 11,
                     bold: true,
                     margin: 7,

@@ -34,7 +34,6 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   defaultNumberG: any = [];
   count: number = 0;
 
-  thumbNails: any = [];
   subscriptions: Subscription[] = [];
   timerSub: any = [];
 
@@ -66,7 +65,6 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.getTankInfo();
     this.defaultNumberG = ['1', '2'];
-    this.getThumbNails();
   }
 
   ngAfterViewInit(): void {
@@ -121,12 +119,6 @@ export class TankInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   valueChange(e: any): void {
     this.count = this.count + 1;
     console.log('count: ', this.count);
-  }
-
-  getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-    });
   }
 
   ngOnDestroy(): void {

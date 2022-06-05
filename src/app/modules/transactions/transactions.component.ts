@@ -9,7 +9,6 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject, interval } from 'rxjs';
 import { TRSearchModel } from 'src/app/shared/models/TRSearchModel';
 import * as moment from 'moment';
-import { DashboardService } from '../dashboard.service';
 import { TransactionService } from '../transaction.service';
 // import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator } from '@angular/material/paginator';
@@ -46,12 +45,10 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
   fuelGrades: any = [];
   pumps: any = [];
   terminals: any = [];
-  thumbNails: any = [];
   subscriptions: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private dashboardService: DashboardService,
     private transactionService: TransactionService
   ) {}
 
@@ -82,8 +79,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this.subscriptions.push(sub3);
-
-    this.getThumbNails();
     this.initializeTransactions();
   }
 
@@ -147,16 +142,6 @@ export class TransactionsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchFormGroup.reset();
     this.TRreceipt.setValue(null);
     this.dataSource.data = [];
-  }
-
-  getThumbNails(): void {
-    const sub3: any = this.dashboardService
-      .getThumbNails()
-      .subscribe((data) => {
-        this.thumbNails = data;
-      });
-
-    this.subscriptions.push(sub3);
   }
 
   ngOnDestroy(): void {

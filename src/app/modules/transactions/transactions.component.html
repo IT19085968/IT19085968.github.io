@@ -1,48 +1,4 @@
-<!-- <mat-card> -->
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <!-- <div> -->
-    <div fxFlex="24" *ngFor="let item of thumbNails">
-      <mat-card
-        class="thumbNail-card"
-        [ngStyle]="{ 'background-color': item.backColour}"
-      >
-        <div fxLayout="row" class="cardTextClass">
-          <div>
-            <mat-card-title fxLayout="column" class="columnClass">
-              <div class="card-title-1 card-title1-fontSize">{{ item.itemName }}</div>
-              <div class="card-title-2 card-title2-fontSize">No of Sales</div>
-              <div class="card-title-2 card-title2-fontSize">Total Orders</div>
-            </mat-card-title>
-          </div>
-          <div>
-            <mat-card-title
-              fxLayout="column"
-              fxLayoutAlign="space-between end"
-              class="columnClassValue"
-            >
-              <div class="card-title-1-value card-title1-fontSize">
-                {{ item.productPrice | currency: 'USD':true: '1.4-4' }}
-              </div>
-              <div class="card-title-2-value card-title2-fontSize">
-                {{ item.noOfSales | number: '1.0-0' }}
-              </div>
-              <div class="card-title-2-value card-title2-fontSize">
-                {{ item.totalAmount | currency }}
-              </div>
-            </mat-card-title>
-          </div>
-        </div>
-  
-        <mat-card-content class="card-content-common">
-          <div>
-            <!-- <i class="fa fa-clock faa-pulse"></i> -->
-            <span class="material-icons icon-ref icon-ref-Size">local_gas_station</span>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
-  </div>
+<app-thumbnails></app-thumbnails>
 
 <br />
 

@@ -69,8 +69,6 @@ export class DispenserStatusComponent
     'deliveries',
   ];
 
-  thumbNails: any = [];
-
   @ViewChild('paginatorDPN')
   paginatorDPN!: MatPaginator;
 
@@ -94,7 +92,6 @@ export class DispenserStatusComponent
 
   ngOnInit(): void {
     this.getDispenserInfo();
-    this.getThumbNails();
     this.createDeliveryForm();
     this.createElectronicForm();
   }
@@ -129,12 +126,6 @@ export class DispenserStatusComponent
     timerTest.connect();
 
     // this.subscriptions.push(this.timerSub);
-  }
-
-  getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-    });
   }
 
   createDeliveryForm(): void {

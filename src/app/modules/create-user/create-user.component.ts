@@ -16,7 +16,6 @@ import {
 } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject, interval } from 'rxjs';
 import { UserService } from '../user.service';
-import { DashboardService } from '../dashboard.service';
 import { User } from 'src/app/shared/models/User';
 import { ConfirmedValidator } from 'src/app/shared/models/CustomValidators';
 
@@ -37,7 +36,6 @@ export class CreateUserComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<User>();
   subscriptions: Subscription[] = [];
   users: any = [];
-  thumbNails: any = [];
   buttonTitle: string = '';
   updateUserBtn: boolean = false;
   public showPassword: boolean = false;
@@ -51,7 +49,6 @@ export class CreateUserComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private dashboardService: DashboardService,
     private changeDetectorRefs: ChangeDetectorRef
   ) {}
 
@@ -59,7 +56,6 @@ export class CreateUserComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.dataSource.paginator = this.paginatorUR;
     this.createForm();
     this.getAllUsers();
-    this.getThumbNails();
     this.buttonTitle = 'Create User';
     this.updateUserBtn = false;
   }
@@ -183,13 +179,6 @@ export class CreateUserComponent implements OnInit, OnDestroy, AfterViewInit {
     this.rtPassword.setValue(row.password);
     this.buttonTitle = 'Update User';
     this.updateUserBtn = true;
-  }
-
-  getThumbNails(): void {
-    this.dashboardService.getThumbNails().subscribe((data) => {
-      this.thumbNails = data;
-      console.log('thumbnails: ', this.thumbNails);
-    });
   }
 
   clearFields(): void {

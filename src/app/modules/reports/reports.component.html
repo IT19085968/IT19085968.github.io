@@ -1,146 +1,100 @@
-<!-- <mat-card> -->
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <!-- <div> -->
-        <div fxFlex="24" *ngFor="let item of thumbNails">
-          <mat-card
-            class="thumbNail-card"
-            [ngStyle]="{ 'background-color': item.backColour }"
-          >
-            <div fxLayout="row" class="cardTextClass">
-              <div>
-                <mat-card-title fxLayout="column" class="columnClass">
-                  <div class="card-title-1 card-title1-fontSize">
-                    {{ item.itemName }}
-                  </div>
-                  <div class="card-title-2 card-title2-fontSize">No of Sales</div>
-                  <div class="card-title-2 card-title2-fontSize">Total Orders</div>
-                </mat-card-title>
-              </div>
-              <div>
-                <mat-card-title
-                  fxLayout="column"
-                  fxLayoutAlign="space-between end"
-                  class="columnClassValue"
-                >
-                  <div class="card-title-1-value card-title1-fontSize">
-                    {{ item.productPrice | currency: 'USD':true: '1.4-4' }}
-                  </div>
-                  <div class="card-title-2-value card-title2-fontSize">
-                    {{ item.noOfSales | number: '1.0-0' }}
-                  </div>
-                  <div class="card-title-2-value card-title2-fontSize">
-                    {{ item.totalAmount | currency }}
-                  </div>
-                </mat-card-title>
-              </div>
-            </div>
-      
-            <mat-card-content class="card-content-common">
-              <div>
-                <!-- <i class="fa fa-clock faa-pulse"></i> -->
-                <span class="material-icons icon-ref icon-ref-Size"
-                  >local_gas_station</span
-                >
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="24" *ngIf="thumbNails.length < 4"></div>
-      </div>
-      
-      <br />
-      
-      <mat-divider></mat-divider>
-      
-      <br />
+<app-thumbnails></app-thumbnails>
 
-      <div class="profile-card">
-        <div class="header">
-          <h2 class="headings">Total Sales</h2>
-        </div>
-      </div>
+<br />
 
-      <button
-        mat-raised-button
-        color="accent"
-        matTooltip="Search by fields"
-        class="m-1 w-100"
-        routerLinkActive="list-item-active" routerLink="/default/reportsGen/{{1}}"
-      >
-        Generate Report
-      </button>
+<mat-divider></mat-divider>
 
-      <br />
-      <br />
-      
-      <mat-divider></mat-divider>
-      
-      <br />
+<br />
 
-      <div class="profile-card">
-        <div class="header">
-          <h2 class="headings">Method of Payment</h2>
-        </div>
-      </div>
+<div class="profile-card">
+  <div class="header">
+    <h2 class="headings">Total Sales</h2>
+  </div>
+</div>
 
-      <button
-        mat-raised-button
-        color="accent"
-        matTooltip="Search by fields"
-        class="m-1 w-100"
-        routerLinkActive="list-item-active" routerLink="/default/reportsGen/{{2}}"
-      >
-        Generate Report
-      </button>
+<button
+  mat-raised-button
+  color="accent"
+  matTooltip="Search by fields"
+  class="m-1 w-100"
+  routerLinkActive="list-item-active"
+  routerLink="/default/reportsGen/{{ 1 }}"
+>
+  Generate Report
+</button>
 
-      <br />
-      <br />
-      
-      <mat-divider></mat-divider>
-      
-      <br />
+<br />
+<br />
 
-      <div class="profile-card">
-        <div class="header">
-          <h2 class="headings">Dispenser & Terminal Sales</h2>
-        </div>
-      </div>
+<mat-divider></mat-divider>
 
-      <button
-        mat-raised-button
-        color="accent"
-        matTooltip="Search by fields"
-        class="m-1 w-100"
-        routerLinkActive="list-item-active" routerLink="/default/reportsGen/{{3}}"
-      >
-        Generate Report
-      </button>
+<br />
 
-      <br />
-      <br />
-      
-      <mat-divider></mat-divider>
-      
-      <br />
+<div class="profile-card">
+  <div class="header">
+    <h2 class="headings">Method of Payment</h2>
+  </div>
+</div>
 
-      <div class="profile-card">
-        <div class="header">
-          <h2 class="headings">Sales Comparison</h2>
-        </div>
-      </div>
+<button
+  mat-raised-button
+  color="accent"
+  matTooltip="Search by fields"
+  class="m-1 w-100"
+  routerLinkActive="list-item-active"
+  routerLink="/default/reportsGen/{{ 2 }}"
+>
+  Generate Report
+</button>
 
-      <button
-        mat-raised-button
-        color="accent"
-        matTooltip="Search by fields"
-        class="m-1 w-100"
-        routerLinkActive="list-item-active" routerLink="/default/reportsGen/{{4}}"
-      >
-        Generate Report
-      </button>
+<br />
+<br />
 
-      <br />
-      <br />
-      <br />
+<mat-divider></mat-divider>
 
-      
+<br />
+
+<div class="profile-card">
+  <div class="header">
+    <h2 class="headings">Dispenser & Terminal Sales</h2>
+  </div>
+</div>
+
+<button
+  mat-raised-button
+  color="accent"
+  matTooltip="Search by fields"
+  class="m-1 w-100"
+  routerLinkActive="list-item-active"
+  routerLink="/default/reportsGen/{{ 3 }}"
+>
+  Generate Report
+</button>
+
+<br />
+<br />
+
+<mat-divider></mat-divider>
+
+<br />
+
+<div class="profile-card">
+  <div class="header">
+    <h2 class="headings">Sales Comparison</h2>
+  </div>
+</div>
+
+<button
+  mat-raised-button
+  color="accent"
+  matTooltip="Search by fields"
+  class="m-1 w-100"
+  routerLinkActive="list-item-active"
+  routerLink="/default/reportsGen/{{ 4 }}"
+>
+  Generate Report
+</button>
+
+<br />
+<br />
+<br />

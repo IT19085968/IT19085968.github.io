@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { PieComponent } from './widgets/pie/pie.component';
@@ -25,6 +26,7 @@ import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import * as Ocean from 'fusioncharts/themes/fusioncharts.theme.ocean';
 import * as Carbon from 'fusioncharts/themes/fusioncharts.theme.carbon';
 import { CylinderComponent } from './widgets/cylinder/cylinder.component';
+import { ThumbnailsComponent } from './components/thumbnails/thumbnails.component';
 
 // require('highcharts/themes/dark-blue')(HighchartsChartModule);
 
@@ -41,12 +43,14 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     ColumnComponent,
     LineComponent,
     CylinderComponent,
+    ThumbnailsComponent,
   ],
   imports: [
     CommonModule,
     MatDividerModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
     MatButtonModule,
     FlexLayoutModule,
     MatMenuModule,
@@ -63,6 +67,7 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     ColumnComponent,
     LineComponent,
     CylinderComponent,
+    ThumbnailsComponent,
   ],
 })
 export class SharedModule {}
