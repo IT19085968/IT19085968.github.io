@@ -16,23 +16,23 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { PieComponent } from './widgets/pie/pie.component';
 import { ColumnComponent } from './widgets/column/column.component';
 import { LineComponent } from './widgets/line/line.component';
-import { FusionChartsModule } from 'angular-fusioncharts';
-import * as FusionCharts from 'fusioncharts';
-import * as Charts from 'fusioncharts/fusioncharts.charts';
-// import * as Charts from 'fusioncharts/fusioncharts.powercharts';
-// PowerCharts
-import * as widgets from 'fusioncharts/fusioncharts.widgets';
-import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
-import * as Ocean from 'fusioncharts/themes/fusioncharts.theme.ocean';
-import * as Carbon from 'fusioncharts/themes/fusioncharts.theme.carbon';
+// import { FusionChartsModule } from 'angular-fusioncharts';
+// import * as FusionCharts from 'fusioncharts';
+// import * as Charts from 'fusioncharts/fusioncharts.charts';
+// // import * as Charts from 'fusioncharts/fusioncharts.powercharts';
+// // PowerCharts
+// import * as widgets from 'fusioncharts/fusioncharts.widgets';
+// import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+// import * as Ocean from 'fusioncharts/themes/fusioncharts.theme.ocean';
+// import * as Carbon from 'fusioncharts/themes/fusioncharts.theme.carbon';
 import { CylinderComponent } from './widgets/cylinder/cylinder.component';
 import { ThumbnailsComponent } from './components/thumbnails/thumbnails.component';
 
 // require('highcharts/themes/dark-blue')(HighchartsChartModule);
 
-Charts(FusionCharts);
-FusionTheme(FusionCharts);
-FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
+// Charts(FusionCharts);
+// FusionTheme(FusionCharts);
+// FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ FusionChartsModule.fcRoot(FusionCharts, widgets, Carbon);
     MatListModule,
     RouterModule,
     HighchartsChartModule,
-    FusionChartsModule,
+    // FusionChartsModule,
   ],
   exports: [
     HeaderComponent,
