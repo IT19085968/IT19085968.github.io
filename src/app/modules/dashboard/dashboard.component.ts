@@ -11,7 +11,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
 import { TankInfo } from 'src/app/shared/models/TankInfo';
-import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
 import { of, Subject, Subscription, timer } from 'rxjs';
 import {
   catchError,

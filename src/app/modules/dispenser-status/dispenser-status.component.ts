@@ -11,7 +11,6 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { DashboardService } from '../dashboard.service';
 import { TransactionService } from '../transaction.service';
-import { DispenserInfo } from 'src/app/shared/models/DispenserInfo';
 import { deliveryTotals } from '../../shared/models/deliveryTotals';
 import { electronicTotals } from '../../shared/models/electronicTotals';
 import { FormBuilder, FormGroup } from '@angular/forms';

@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment.prod';
-import { TRSearchModel } from '../shared/models/TRSearchModel';
 
 @Injectable({
   providedIn: 'root',

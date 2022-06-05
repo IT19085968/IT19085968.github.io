@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject, interval } from 'rxjs';
-import { TRSearchModel } from 'src/app/shared/models/TRSearchModel';
 import * as moment from 'moment';
 import { TransactionService } from '../transaction.service';
 // import { MatFormFieldModule } from '@angular/material/form-field';
