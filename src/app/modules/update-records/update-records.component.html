@@ -191,7 +191,7 @@
     <div *ngFor="let item of dataSource.data" fxFlex="20" class="labelClass">
       <h4 class="itemsClass" fxLayout="row" fxLayoutAlign="space-evenly none">
         <span class="prtitle" fxFlex="24">{{ item.productName }}</span
-        ><span class="prValue" fxFlex="24"> {{ item.productPrice }}</span>
+        ><span class="prValue" fxFlex="24"> {{ item.productPrice | number : '1.3-3' }}</span>
       </h4>
     </div>
     <!-- <br /> -->
