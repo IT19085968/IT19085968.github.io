@@ -319,11 +319,11 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     border: [false, false, false, false],
                   },
                   {
-                    text: parseFloat(p.unitPrice).toFixed(2),
+                    text: parseFloat(p.unitPrice).toFixed(3),
                     border: [false, false, false, false],
                   },
                   {
-                    text: parseFloat(p.amount).toFixed(2),
+                    text: parseFloat(p.amount).toFixed(3),
                     border: [false, false, false, false],
                   },
                   { text: p.cardType, border: [false, false, false, false] },
@@ -354,7 +354,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         (sum: any, p: any) => sum + parseFloat(p.amount),
                         0
                       )
-                      .toFixed(2),
+                      .toFixed(3),
                     border: [false, true, false, true],
                   },
                   { text: '', border: [false, true, false, true] },
@@ -547,7 +547,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     fontSize: 8,
                   },
                   {
-                    text: parseFloat(p.totalAmt).toFixed(2),
+                    text: parseFloat(p.totalAmt).toFixed(3),
                     border: [false, false, false, false],
                     fontSize: 8,
                   },
@@ -576,7 +576,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                         (sum: any, p: any) => sum + parseFloat(p.totalAmt),
                         0
                       )
-                      .toFixed(2),
+                      .toFixed(3),
                     border: [false, true, false, true],
                     bold: true,
                     fontSize: 8,
@@ -764,7 +764,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                           border: [false, false, false, false],
                         },
                         {
-                          text: parseFloat(p.totalAmount).toFixed(2),
+                          text: parseFloat(p.totalAmount).toFixed(3),
                           border: [false, false, false, false],
                         },
                         {
@@ -797,7 +797,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                                 sum + parseFloat(p.totalAmount),
                               0
                             )
-                            .toFixed(2),
+                            .toFixed(3),
                           border: [false, false, false, true],
                           bold: true,
                         },
@@ -848,7 +848,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                           border: [false, false, false, false],
                         },
                         {
-                          text: parseFloat(p.totalAmt).toFixed(2),
+                          text: parseFloat(p.totalAmt).toFixed(3),
                           border: [false, false, false, false],
                         },
                         {
@@ -881,7 +881,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                                 sum + parseFloat(p.totalAmt),
                               0
                             )
-                            .toFixed(2),
+                            .toFixed(3),
                           border: [false, false, false, true],
                           bold: true,
                         },
@@ -1079,7 +1079,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     border: [true, true, false, true],
                   },
                   {
-                    text: parseFloat(p.electronicTotalAmount).toFixed(2),
+                    text: parseFloat(p.electronicTotalAmount).toFixed(3),
                     border: [true, true, true, true],
                   },
                   {
@@ -1087,11 +1087,11 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     border: [true, true, true, true],
                   },
                   {
-                    text: parseFloat(p.deliveryTotalAmount).toFixed(2),
+                    text: parseFloat(p.deliveryTotalAmount).toFixed(3),
                     border: [true, true, true, true],
                   },
                   {
-                    text: parseFloat(p.salesAmount).toFixed(2),
+                    text: parseFloat(p.salesAmount).toFixed(3),
                     border: [true, true, true, true],
                   },
                 ]),
