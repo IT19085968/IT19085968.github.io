@@ -73,6 +73,8 @@ export class ReportGenComponent implements OnInit, OnDestroy {
     this.reportsFormGroup = this.formBuilder.group({
       FromDate: [''],
       ToDate: [''],
+      FromTime: [''],
+      ToTime:['']
     });
   }
 
@@ -80,13 +82,19 @@ export class ReportGenComponent implements OnInit, OnDestroy {
     if (!this.formValidation()) {
       const filter: any = {};
 
-      filter.FromDate = this.reportsFormGroup?.value.FromDate
+      const FromTime:any = this.reportsFormGroup?.value.FromTime;
+      const ToTime :any = this.reportsFormGroup?.value.ToTime;
+
+      const FromDate:any = this.reportsFormGroup?.value.FromDate
         ? moment(this.reportsFormGroup?.value.FromDate).format('YYYY-MM-DD')
         : null;
-      filter.ToDate = this.reportsFormGroup?.value.ToDate
+      const ToDate:any = this.reportsFormGroup?.value.ToDate
         ? moment(this.reportsFormGroup?.value.ToDate).format('YYYY-MM-DD')
         : null;
 
+      filter.FromDate = FromTime ? moment(FromDate + ' ' + FromTime).format('YYYY-MM-DD HH:mm'): FromDate;
+      filter.ToDate = ToTime ? moment(ToDate + ' ' + ToTime).format('YYYY-MM-DD HH:mm'): ToDate;
+      
       if (this.reportT === '1') {
         const subscription: any = this.reportsService
           .getSalesTotalReport(filter.FromDate, filter.ToDate)

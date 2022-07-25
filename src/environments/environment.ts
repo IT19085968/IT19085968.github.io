@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://202.92.217.56:8281/flexapi',
+  apiURL: 'http://219.89.195.128:8182/flexapi',
 };
 
 /*
