@@ -82,8 +82,8 @@ export class ReportGenComponent implements OnInit, OnDestroy {
     if (!this.formValidation()) {
       const filter: any = {};
 
-      const FromTime:any = this.reportsFormGroup?.value.FromTime;
-      const ToTime :any = this.reportsFormGroup?.value.ToTime;
+      const FromTime:any = this.reportsFormGroup?.value.FromTime ? this.reportsFormGroup?.value.FromTime : "00:00";
+      const ToTime :any = this.reportsFormGroup?.value.ToTime ? this.reportsFormGroup?.value.ToTime: "00:00";
 
       const FromDate:any = this.reportsFormGroup?.value.FromDate
         ? moment(this.reportsFormGroup?.value.FromDate).format('YYYY-MM-DD')
@@ -92,8 +92,8 @@ export class ReportGenComponent implements OnInit, OnDestroy {
         ? moment(this.reportsFormGroup?.value.ToDate).format('YYYY-MM-DD')
         : null;
 
-      filter.FromDate = FromTime ? moment(FromDate + ' ' + FromTime).format('YYYY-MM-DD HH:mm'): FromDate;
-      filter.ToDate = ToTime ? moment(ToDate + ' ' + ToTime).format('YYYY-MM-DD HH:mm'): ToDate;
+      filter.FromDate = moment(FromDate + ' ' + FromTime).format('YYYY-MM-DD HH:mm');
+      filter.ToDate = moment(ToDate + ' ' + ToTime).format('YYYY-MM-DD HH:mm');
       
       if (this.reportT === '1') {
         const subscription: any = this.reportsService
@@ -258,7 +258,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(fromDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \t\t\t\t`,
                       fontSize: 8,
                     },
@@ -269,7 +269,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(ToDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \n\n\n`,
                       fontSize: 8,
                     },
@@ -489,7 +489,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(fromDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \t\t\t\t`,
                       fontSize: 9,
                     },
@@ -500,7 +500,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(ToDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \n\n\n`,
                       fontSize: 9,
                     },
@@ -713,7 +713,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(fromDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \t\t\t\t`,
                       fontSize: 9,
                     },
@@ -724,7 +724,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(ToDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \n\n\n`,
                       fontSize: 9,
                     },
@@ -1025,7 +1025,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(fromDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \t\t\t\t`,
                       fontSize: 8,
                     },
@@ -1036,7 +1036,7 @@ export class ReportGenComponent implements OnInit, OnDestroy {
                     },
                     {
                       text: ` ${moment(new Date(ToDate)).format(
-                        'YYYY-MM-DD'
+                        'YYYY/MM/DD  HH:mm:ss'
                       )} \n\n\n`,
                       fontSize: 8,
                     },
